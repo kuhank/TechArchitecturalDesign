@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DHA 2024 Code Versions – ERD V1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  :root{
+    --ink:#1f2933; --muted:#6b7480; --line:#e3e6ea; --bg:#eef0f3;
+    --blue:#2e4f8f; --green:#3f7a4f; --teal:#2f7f7a; --orange:#b8621b; --slate:#4a5361; --plum:#5b3f9b;
+    --pk:#fde7b0; --pkt:#8a5a00; --fk:#dfe9fb; --fkt:#2a4f9a; --uq:#ece3fb; --uqt:#5b3f9b; --new:#dff3e4; --newt:#2d7a43;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:297mm;height:210mm;margin:8mm auto;background:#fff;position:relative;overflow:hidden;padding:7mm 8mm 6mm;box-shadow:0 2px 10px rgba(0,0,0,.12);page-break-after:always;break-after:page}
+  @media print{ body{background:#fff} .page{margin:0;box-shadow:none} }
+
+  /* header */
+  .hdr{display:flex;align-items:center;gap:3mm;border-bottom:1px solid var(--line);padding-bottom:2.5mm}
+  .logo{width:7mm;height:7mm;border-radius:1.6mm;background:var(--teal)}
+  .ttl{font-weight:700;font-size:12pt;line-height:1.1}
+  .sub{font-size:7pt;color:var(--muted)}
+  .pill{margin-left:2mm;background:var(--teal);color:#fff;font-weight:600;font-size:8pt;padding:1.2mm 3mm;border-radius:1.6mm}
+  .meta{margin-left:auto;font-size:7pt;color:var(--muted);border:1px solid var(--line);border-radius:5mm;padding:1.2mm 3mm}
+  .meta b{color:var(--teal)}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:1.5mm 4mm;font-size:6.6pt;color:var(--muted);padding:1.8mm 0 1.6mm;border-bottom:1px solid var(--line)}
+  .legend b{color:var(--ink)}
+  .lg{display:inline-flex;align-items:center;gap:1.2mm}
+  .lg svg{width:9mm;height:3mm}
+
+  /* columns */
+  .cols{position:relative;display:grid;gap:0 11mm;margin-top:2.5mm;z-index:1}
+  .col h4{margin:0 0 3.5mm;font-size:6.6pt;letter-spacing:.08em;color:var(--muted);font-weight:600}
+  .stack{display:flex;flex-direction:column;gap:3mm}
+
+  /* card */
+  .card{background:#fff;border:1px solid #d5d9df;border-radius:1.6mm;overflow:hidden;box-shadow:0 .4mm 1.2mm rgba(0,0,0,.06)}
+  .card .h{display:flex;align-items:center;justify-content:space-between;padding:1.4mm 2.4mm;color:#fff}
+  .card .h .n{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:7.8pt}
+  .card .h .k{font-size:5.4pt;font-weight:600;letter-spacing:.05em;opacity:.9}
+  .card .d{font-size:6pt;color:var(--muted);padding:1mm 2.4mm;background:#f6f7f9;border-bottom:1px solid var(--line)}
+  .row{display:flex;align-items:center;gap:1.2mm;height:3.9mm;padding:0 2.4mm;border-bottom:1px solid #f0f1f3;font-size:6.6pt}
+  .row .dot{width:1.6mm;height:1.6mm;border-radius:50%;background:var(--ink);flex:none}
+  .row .dot.o{background:#fff;border:.25mm solid var(--ink)}
+  .row .c{font-family:"JetBrains Mono",monospace}
+  .row .c.key{font-weight:600}
+  .row .t{margin-left:auto;font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:5.8pt}
+  .row.new{background:var(--new)}
+  .b{font-size:4.8pt;font-weight:700;padding:.2mm .8mm;border-radius:.6mm;font-family:Inter,sans-serif}
+  .b.pk{background:var(--pk);color:var(--pkt)} .b.fk{background:var(--fk);color:var(--fkt)}
+  .b.uq{background:var(--uq);color:var(--uqt)} .b.nw{background:var(--newt);color:#fff}
+  .aud{font-size:5.8pt;color:var(--muted);font-style:italic;padding:.9mm 2.4mm;border-bottom:1px solid var(--line)}
+  .chg{font-size:6pt;padding:1mm 2.4mm;background:var(--new);color:var(--newt);font-weight:600}
+  .chg.none{background:#f6f7f9;color:var(--muted);font-weight:500}
+
+  /* notes */
+  .note{border:1px solid #ecd9a6;background:#fff8e6;border-radius:1.6mm;padding:2mm 2.6mm;font-size:6.5pt;line-height:1.45}
+  .note h5{margin:0 0 1mm;font-size:7pt}
+  .note ul{margin:0;padding-left:3.5mm}
+  .note table{border-collapse:collapse;width:100%;margin-top:1mm}
+  .note td,.note th{border:1px solid #ead9ab;padding:.5mm 1mm;font-size:6pt;text-align:left}
+  .note th{background:#fbeec8}
+  .mono{font-family:"JetBrains Mono",monospace}
+  .ok{color:var(--newt);font-weight:700} .no{color:#b42318;font-weight:700}
+
+  svg.links{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+  .foot{position:absolute;left:8mm;right:8mm;bottom:3mm;font-size:6pt;color:var(--muted);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 : LEGACY ================= -->
+<section class="page" id="p1">
+  <svg class="links"></svg>
+  <div class="hdr">
+    <div class="logo" style="background:var(--slate)"></div>
+    <div><div class="ttl">Legacy Billing – DHA code tables</div><div class="sub">SQL Server · srvdb.accumed.io · database Accumed</div></div>
+    <div class="pill" style="background:var(--slate)">ERD V1</div>
+    <div class="meta"><b>●</b> DHA Circular GC 06-2026 · 2024 code versions · 5 Nov 2026 · Prepared by Kuhan</div>
+  </div>
+  <div class="legend">
+    <span><b>Model</b>&nbsp; one row per code · one <span class="mono">bit</span> column per code year · tables are standalone (no FKs)</span>
+    <span class="lg"><span class="row dot" style="all:unset;width:1.6mm;height:1.6mm;border-radius:50%;background:#1f2933;display:inline-block"></span> NOT NULL</span>
+    <span class="lg"><span style="width:1.6mm;height:1.6mm;border-radius:50%;border:.25mm solid #1f2933;display:inline-block"></span> nullable</span>
+    <span class="lg"><span class="b pk">PK</span> primary key</span>
+    <span class="lg"><span class="b nw">+ 2024</span> proposed</span>
+  </div>
+
+  <div class="cols" style="grid-template-columns:repeat(3,1fr)">
+    <div class="col"><h4>DIAGNOSIS (ICD-10-CM)</h4><div class="stack" data-slot="ACCUMED_DHA_ICD10"></div></div>
+    <div class="col"><h4>PROCEDURE (CPT)</h4><div class="stack" data-slot="ACCUMED_DHA_CPT"></div></div>
+    <div class="col"><h4>CONSUMABLE (HCPCS)</h4><div class="stack" data-slot="ACCUMED_DHA_HCPCS"></div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:5mm;margin-top:4mm;position:relative;z-index:1">
+    <div class="note">
+      <h5>2024 change – legacy</h5>
+      <ul>
+        <li>Schema: <span class="mono">ALTER TABLE … ADD [2024] bit</span> on all 3 tables</li>
+        <li>Existing codes in the 2024 file → <span class="mono">[2024] = 1</span></li>
+        <li>New codes → INSERT with <span class="mono">[2024] = 1</span>, other years 0 &nbsp;(ICD <b>1,772</b> · CPT <b>726</b> · HCPCS <b>1,052</b>)</li>
+        <li>Codes dropped in 2024 keep <span class="mono">[2024] = 0</span> &nbsp;(ICD 331 · CPT 150 · HCPCS 29)</li>
+        <li>Application: encounter end date ≥ <b>2027-01-01</b> → use <span class="mono">[2024]</span>, else <span class="mono">[2021]</span></li>
+      </ul>
+    </div>
+    <div class="note">
+      <h5>Example – ACCUMED_DHA_ICD10 after the change</h5>
+      <table>
+        <tr><th>ID</th><th>Code</th><th>ShortDesc</th><th>[2012]</th><th>[2018]</th><th>[2021]</th><th>[2024]</th><th>Meaning</th></tr>
+        <tr><td>101</td><td class="mono">J06.9</td><td>Acute URI</td><td>1</td><td>1</td><td>1</td><td class="ok">1</td><td>valid 2021 + 2024 (flag set)</td></tr>
+        <tr><td>202</td><td class="mono">D48.1</td><td>Neoplasm connective tissue</td><td>1</td><td>1</td><td>1</td><td class="no">0</td><td>dropped in 2024</td></tr>
+        <tr><td>9001</td><td class="mono">D48.110</td><td>Desmoid tumor of head/neck</td><td>0</td><td>0</td><td>0</td><td class="ok">1</td><td>new row, 2024 only</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>Page 1 of 2 · Legacy SQL Server</span><span>Counts from read-only check on 5 Nov 2026 vs DHA 2024 files (ICD-10-CM_2024_20251231, CPT/HCPCS_2024_20260305)</span></div>
+</section>
+
+<!-- ================= PAGE 2 : UNIFIED BILLING ================= -->
+<section class="page" id="p2">
+  <svg class="links"></svg>
+  <div class="hdr">
+    <div class="logo"></div>
+    <div><div class="ttl">Unified Billing – medical code versions</div><div class="sub">Postgres · database billing (staging: billing_migration, 192.168.111.10:5438) · schema public</div></div>
+    <div class="pill">ERD V1</div>
+    <div class="meta"><b>●</b> DHA Circular GC 06-2026 · 2024 code versions · 5 Nov 2026 · Prepared by Kuhan</div>
+  </div>
+  <div class="legend">
+    <span><b>Notation</b></span>
+    <span class="lg"><svg viewBox="0 0 34 12"><line x1="2" y1="6" x2="32" y2="6" stroke="#555" stroke-width="1.2"/><line x1="5" y1="1" x2="5" y2="11" stroke="#555" stroke-width="1.2"/><line x1="8" y1="1" x2="8" y2="11" stroke="#555" stroke-width="1.2"/></svg> exactly one</span>
+    <span class="lg"><svg viewBox="0 0 34 12"><line x1="2" y1="6" x2="32" y2="6" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="1" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="11" stroke="#555" stroke-width="1.2"/><line x1="22" y1="1" x2="22" y2="11" stroke="#555" stroke-width="1.2"/></svg> one or many</span>
+    <span class="lg"><span style="width:1.6mm;height:1.6mm;border-radius:50%;background:#1f2933;display:inline-block"></span> NOT NULL</span>
+    <span class="lg"><span style="width:1.6mm;height:1.6mm;border-radius:50%;border:.25mm solid #1f2933;display:inline-block"></span> nullable</span>
+    <span class="lg"><span class="b pk">PK</span><span class="b fk">FK</span><span class="b uq">UQ</span> keys</span>
+    <span class="lg"><span class="b uq">UQ*</span> unique (code, regulator_id)</span>
+    <span class="lg"><span class="chg" style="padding:.3mm 1.2mm;border-radius:.6mm">green bar</span> rows added for 2024 – no schema change</span>
+  </div>
+
+  <div class="cols" style="grid-template-columns:70mm 56mm 50mm 1fr">
+    <div class="col"><h4>CODES (ONE ROW PER CODE PER REGULATOR)</h4><div class="stack" data-slot="diagnosis_code,procedure_code,consumable_code"></div></div>
+    <div class="col"><h4>CODE ↔ VERSION LINKS</h4><div class="stack" data-slot="regulators,diagnosis_code_version,procedure_code_version,consumable_code_version"></div></div>
+    <div class="col"><h4>VERSIONS (ONE ROW PER YEAR)</h4><div class="stack" data-slot="diagnosis_version,procedure_version,consumable_version,drg_version"></div></div>
+    <div class="col"><h4>ACTIVE VERSION BY DATE</h4>
+      <div class="stack">
+        <div data-slot="regulator_codebase"></div>
+        <div class="note">
+          <h5>How a claim picks the version</h5>
+          Claim: DHA · encounter end date <b>05-Jan-2027</b> · code <span class="mono">D48.1</span>
+          <ol style="margin:.8mm 0 0;padding-left:3.5mm">
+            <li><span class="mono">regulator_codebase</span>: DHA row where date is between start_date and end_date → <b>ICD 2024</b></li>
+            <li><span class="mono">diagnosis_code</span>: D48.1 for DHA → row c2</li>
+            <li><span class="mono">diagnosis_code_version</span>: c2 + 2024? → <span class="no">no row → rejected</span></li>
+          </ol>
+          Same claim dated 20-Dec-2026 → ICD 2021 → c2 + 2021 exists → <span class="ok">allowed</span>
+        </div>
+        <div class="note">
+          <h5>regulator_codebase rows to add (DHA)</h5>
+          <table>
+            <tr><th>ICD</th><th>CPT</th><th>HCPCS</th><th>DRG</th><th>start</th><th>end</th></tr>
+            <tr><td>2021</td><td>2021</td><td>2021</td><td>2016</td><td>tbc</td><td>2026-12-31</td></tr>
+            <tr><td class="ok">2024</td><td class="ok">2024</td><td class="ok">2024</td><td>2016</td><td>2027-01-01</td><td>tbc</td></tr>
+          </table>
+          <div style="margin-top:1mm;color:#6b7480">Table is empty today – backend to confirm the app reads it. drg_code / drg_code_version unchanged until DHA publishes IR-DRG 3.5.5.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Page 2 of 2 · Unified Billing Postgres</span><span>2024 links: ICD 74,044 · CPT 11,282 · HCPCS 7,497 &nbsp;|&nbsp; already in UB: 72,272 · 10,556 · 6,445</span></div>
+</section>
+
+<script>
+/* ---------- table definitions: [column, type, keys, notNull, isNew] ---------- */
+const AUD = "+ created / updated / deleted _at / _by";
+const T = {
+  /* legacy */
+  ACCUMED_DHA_ICD10:{c:"var(--slate)",k:"REFERENCE",d:"One row per ICD code; year = bit flag.",
+    cols:[["ID","int","PK",1],["Code","nvarchar","",1],["ShortDesc","nvarchar","",1],["LongDesc","nvarchar","",1],["Chapter / Category1–6","nvarchar","",0],["EFFECTIVE_START_DATE","datetime","",0],["EFFECTIVE_DELETE_DATE","datetime","",0],["[2012]","bit","",0],["[2018]","bit","",0],["[2021]","bit","",0],["[2024]","bit","NEW",0,1]],
+    aud:null, chg:"2024: +1 column · 1,772 new rows"},
+  ACCUMED_DHA_CPT:{c:"var(--slate)",k:"REFERENCE",d:"One row per CPT code; year = bit flag.",
+    cols:[["ID","int","PK",1],["CPT_CODE","varchar","",0],["SHORT_DESCRIPTION","nvarchar","",0],["LONG_DESCRIPTION","nvarchar","",0],["FULL_DESCRIPTION","nvarchar","",0],["EFFECTIVE_START_DATE","datetime","",0],["EFFECTIVE_DELETE_DATE","datetime","",0],["[2012]","bit","",0],["[2018]","bit","",0],["[2021]","bit","",0],["[2024]","bit","NEW",0,1]],
+    aud:null, chg:"2024: +1 column · 726 new rows"},
+  ACCUMED_DHA_HCPCS:{c:"var(--slate)",k:"REFERENCE",d:"One row per HCPCS code; year = bit flag.",
+    cols:[["ID","int","PK",1],["HCPC","varchar","",1],["Long_Description","nvarchar","",0],["Short_Description","nvarchar","",0],["EFFECTIVE_START_DATE","datetime","",0],["EFFECTIVE_DELETE_DATE","datetime","",0],["[2012]","bit","",0],["[2018]","bit","",0],["[2021]","bit","",0],["[2024]","bit","NEW",0,1]],
+    aud:null, chg:"2024: +1 column · 1,052 new rows"},
+  /* UB */
+  diagnosis_code:{c:"var(--blue)",k:"REFERENCE",d:"ICD-10-CM codes. One row per code per regulator.",
+    cols:[["id","uuid","PK",1],["code","varchar","UQ*",1],["regulator_id","uuid","FK",1],["short_description","text","",1],["long_description","text","",1],["effective_date","timestamp","",1],["expiry_date","timestamp","",1]],
+    aud:"+ full_description, chapter, classification · audit cols", chg:"2024: +1,772 rows (DHA)"},
+  procedure_code:{c:"var(--blue)",k:"REFERENCE",d:"CPT codes. One row per code per regulator.",
+    cols:[["id","uuid","PK",1],["code","varchar","UQ*",1],["regulator_id","uuid","FK",1],["short_description","text","",1],["long_description","text","",1],["effective_date","timestamp","",1],["expiry_date","timestamp","",1]],
+    aud:"+ full_description · audit cols", chg:"2024: +726 rows (DHA)"},
+  consumable_code:{c:"var(--blue)",k:"REFERENCE",d:"HCPCS codes. One row per code per regulator.",
+    cols:[["id","uuid","PK",1],["code","varchar","UQ*",1],["regulator_id","uuid","FK",1],["short_description","text","",1],["long_description","text","",1],["high_cost_consumables","boolean","",1],["translated_medicare_price","real","",1],["effective_date","timestamp","",1],["expiry_date","timestamp","",1]],
+    aud:"+ full_description · audit cols", chg:"2024: +1,052 rows (DHA) · defaults for boolean/real tbc"},
+  regulators:{c:"#6f7782",k:"MASTER",d:"DHA · HAAD · RIAYATI",cols:[["id","uuid","PK",1]],aud:"+ name and other master columns",chg:null},
+  diagnosis_code_version:{c:"var(--green)",k:"LINK",d:"Which ICD years a code belongs to.",
+    cols:[["id","uuid","PK",1],["diagnosis_code_id","uuid","FK",1],["diagnosis_version_id","uuid","FK",1]],aud:AUD,chg:"2024: +74,044 rows"},
+  procedure_code_version:{c:"var(--green)",k:"LINK",d:"Which CPT years a code belongs to.",
+    cols:[["id","uuid","PK",1],["procedure_code_id","uuid","FK",1],["procedure_version_id","uuid","FK",1]],aud:AUD,chg:"2024: +11,282 rows"},
+  consumable_code_version:{c:"var(--green)",k:"LINK",d:"Which HCPCS years a code belongs to.",
+    cols:[["id","uuid","PK",1],["consumable_code_id","uuid","FK",1],["consumable_version_id","uuid","FK",1]],aud:AUD,chg:"2024: +7,497 rows"},
+  diagnosis_version:{c:"var(--plum)",k:"REFERENCE",d:"ICD 2012 · 2018 · 2021",
+    cols:[["id","uuid","PK",1],["name","varchar","UQ",1],["release","varchar","UQ",1],["year","int","",1]],aud:null,chg:"2024: +1 row (ICD 10 CM 2024)"},
+  procedure_version:{c:"var(--plum)",k:"REFERENCE",d:"CPT 2011 · 2012 · 2018 · 2021",
+    cols:[["id","uuid","PK",1],["name","varchar","UQ",1],["release","varchar","UQ",1],["year","int","",1]],aud:null,chg:"2024: +1 row (CPT 2024)"},
+  consumable_version:{c:"var(--plum)",k:"REFERENCE",d:"Consumable 2011 · 2012 · 2018 · 2021",
+    cols:[["id","uuid","PK",1],["name","varchar","UQ",1],["release","varchar","UQ",1],["year","int","UQ",1]],aud:null,chg:"2024: +1 row (Consumable 2024)"},
+  drg_version:{c:"var(--plum)",k:"REFERENCE",d:"DRG 2016",
+    cols:[["id","uuid","PK",1],["name","varchar","UQ",1],["release","varchar","UQ",1],["year","int","",1]],aud:null,chg:"none",none:1},
+  regulator_codebase:{c:"var(--orange)",k:"CONFIG",d:"Versions a regulator uses between two dates. Empty today.",
+    cols:[["id","uuid","PK",1],["regulator_id","uuid","FK",1],["diagnosis_version_id","uuid","FK",1],["procedure_version_id","uuid","FK",1],["consumable_version_id","uuid","FK",1],["drg_version_id","uuid","FK",1],["start_date","date","",1],["end_date","date","",1]],
+    aud:AUD,chg:"2024: +2 rows for DHA (2021 set, 2024 set)"}
+};
+
+/* relationships: [oneTable, oneCol, manyTable, manyCol, color, route] */
+const R = [
+  ["regulators","id","diagnosis_code","regulator_id","#8a929c"],
+  ["regulators","id","procedure_code","regulator_id","#8a929c"],
+  ["regulators","id","consumable_code","regulator_id","#8a929c"],
+  ["diagnosis_code","id","diagnosis_code_version","diagnosis_code_id","#3f7a4f"],
+  ["procedure_code","id","procedure_code_version","procedure_code_id","#3f7a4f"],
+  ["consumable_code","id","consumable_code_version","consumable_code_id","#3f7a4f"],
+  ["diagnosis_version","id","diagnosis_code_version","diagnosis_version_id","#5b3f9b"],
+  ["procedure_version","id","procedure_code_version","procedure_version_id","#5b3f9b"],
+  ["consumable_version","id","consumable_code_version","consumable_version_id","#5b3f9b"],
+  ["diagnosis_version","id","regulator_codebase","diagnosis_version_id","#b8621b"],
+  ["procedure_version","id","regulator_codebase","procedure_version_id","#b8621b"],
+  ["consumable_version","id","regulator_codebase","consumable_version_id","#b8621b"],
+  ["drg_version","id","regulator_codebase","drg_version_id","#b8621b"],
+  ["regulators","id","regulator_codebase","regulator_id","#b8621b","top"]
+];
+
+function badge(k){
+  if(!k) return "";
+  if(k==="NEW") return '<span class="b nw">+ 2024</span>';
+  const cls = k.startsWith("PK")?"pk":k.startsWith("FK")?"fk":"uq";
+  return `<span class="b ${cls}">${k}</span>`;
+}
+function card(name){
+  const t=T[name];
+  let h=`<div class="card" data-t="${name}"><div class="h" style="background:${t.c}"><span class="n">${name}</span><span class="k">${t.k}</span></div><div class="d">${t.d}</div>`;
+  for(const [c,ty,k,nn,nw] of t.cols){
+    h+=`<div class="row${nw?" new":""}" data-c="${c}"><span class="dot${nn?"":" o"}"></span><span class="c${k&&k!=="NEW"&&k.startsWith("PK")?" key":""}">${c}</span>${badge(k)}<span class="t">${ty}</span></div>`;
+  }
+  if(t.aud) h+=`<div class="aud">${t.aud}</div>`;
+  if(t.chg) h+=`<div class="chg${t.none?" none":""}">${t.none?"2024: no change (DRG 3.5.5 later)":t.chg}</div>`;
+  return h+"</div>";
+}
+document.querySelectorAll("[data-slot]").forEach(s=>{
+  s.innerHTML=s.dataset.slot.split(",").map(card).join("");
+});
+
+/* ---------- connectors ---------- */
+function draw(){
+  document.querySelectorAll(".page").forEach(page=>{
+    const svg=page.querySelector("svg.links"); svg.innerHTML="";
+    const P=page.getBoundingClientRect();
+    const sc=P.width/page.offsetWidth || 1;           // handles zoom
+    const rel=r=>({l:(r.left-P.left)/sc,r:(r.right-P.left)/sc,t:(r.top-P.top)/sc,b:(r.bottom-P.top)/sc});
+    let html="";
+    const cardsTop=Math.min(...[...page.querySelectorAll(".card")].map(c=>rel(c.getBoundingClientRect()).t));
+    for(const [a,ac,b,bc,col,route] of R){
+      const ra=page.querySelector(`[data-t="${a}"] [data-c="${ac}"]`), rb=page.querySelector(`[data-t="${b}"] [data-c="${bc}"]`);
+      if(!ra||!rb) continue;
+      const A=rel(ra.getBoundingClientRect()), B=rel(rb.getBoundingClientRect());
+      const ay=(A.t+A.b)/2, by=(B.t+B.b)/2;
+      const right = (A.l+A.r)/2 < (B.l+B.r)/2;
+      const ax = right?A.r:A.l, bx = right?B.l:B.r, da = right?1:-1, db = -da;
+      let d;
+      if(route==="top"){
+        const lane=cardsTop-2.2*3.78, x1=ax+da*8, x2=bx+db*10;
+        d=`M${ax},${ay} H${x1} V${lane} H${x2} V${by} H${bx}`;
+      }else{
+        const dx=Math.max(18,Math.abs(bx-ax)/2);
+        d=`M${ax},${ay} C${ax+da*dx},${ay} ${bx+db*dx},${by} ${bx},${by}`;
+      }
+      html+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="1" opacity=".85"/>`;
+      // one end (two bars)
+      for(const o of [5,8]) html+=`<line x1="${ax+da*o}" y1="${ay-4}" x2="${ax+da*o}" y2="${ay+4}" stroke="${col}" stroke-width="1"/>`;
+      // many end (crow's foot + bar = one or many)
+      const fx=bx+db*8;
+      html+=`<line x1="${fx}" y1="${by}" x2="${bx}" y2="${by-4}" stroke="${col}" stroke-width="1"/><line x1="${fx}" y1="${by}" x2="${bx}" y2="${by+4}" stroke="${col}" stroke-width="1"/><line x1="${bx+db*10}" y1="${by-4}" x2="${bx+db*10}" y2="${by+4}" stroke="${col}" stroke-width="1"/>`;
+    }
+    svg.innerHTML=html;
+  });
+}
+window.addEventListener("load",draw);
+window.addEventListener("resize",draw);
+window.addEventListener("beforeprint",draw);
+if(document.fonts) document.fonts.ready.then(draw);
+</script>
+</body>
+</html>
