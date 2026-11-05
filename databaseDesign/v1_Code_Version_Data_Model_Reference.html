@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Version Data Model – Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  :root{
+    --ink:#1f2933; --muted:#6b7480; --line:#e3e6ea; --bg:#eef0f3;
+    --blue:#2e4f8f; --green:#3f7a4f; --teal:#2f7f7a; --orange:#b8621b; --slate:#4a5361; --plum:#5b3f9b; --grey:#6f7782;
+    --pk:#fde7b0; --pkt:#8a5a00; --fk:#dfe9fb; --fkt:#2a4f9a; --uq:#ece3fb; --uqt:#5b3f9b; --lk:#e6f2f1; --lkt:#2f7f7a; --new:#dff3e4; --newt:#2d7a43;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:297mm;height:210mm;margin:8mm auto;background:#fff;position:relative;overflow:hidden;padding:7mm 8mm 6mm;box-shadow:0 2px 10px rgba(0,0,0,.12);page-break-after:always;break-after:page}
+  @media print{ body{background:#fff} .page{margin:0;box-shadow:none} }
+  .hdr{display:flex;align-items:center;gap:3mm;border-bottom:1px solid var(--line);padding-bottom:2.5mm}
+  .logo{width:7mm;height:7mm;border-radius:1.6mm;background:var(--teal);flex:none}
+  .ttl{font-weight:700;font-size:12pt;line-height:1.1}
+  .sub{font-size:7pt;color:var(--muted)}
+  .pill{white-space:nowrap;flex:none;margin-left:2mm;background:var(--teal);color:#fff;font-weight:600;font-size:8pt;padding:1.2mm 3mm;border-radius:1.6mm}
+  .meta{white-space:nowrap;flex:none;margin-left:auto;font-size:7pt;color:var(--muted);border:1px solid var(--line);border-radius:5mm;padding:1.2mm 3mm}
+  .meta b{color:var(--teal)}
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:1.5mm 4mm;font-size:6.5pt;color:var(--muted);padding:1.7mm 0 1.5mm;border-bottom:1px solid var(--line)}
+  .legend b{color:var(--ink)}
+  .lg{display:inline-flex;align-items:center;gap:1.2mm}
+  .lg svg{width:9mm;height:3mm}
+  .cols{position:relative;display:grid;gap:0 10mm;margin-top:2.5mm;z-index:1}
+  .col h4{margin:0 0 3.2mm;font-size:6.5pt;letter-spacing:.08em;color:var(--muted);font-weight:600}
+  .stack{display:flex;flex-direction:column;gap:3mm}
+  .card{background:#fff;border:1px solid #d5d9df;border-radius:1.6mm;overflow:hidden;box-shadow:0 .4mm 1.2mm rgba(0,0,0,.06)}
+  .card .h{display:flex;align-items:center;justify-content:space-between;padding:1.3mm 2.4mm;color:#fff}
+  .card .h .n{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:7.6pt}
+  .card .h .k{font-size:5.3pt;font-weight:600;letter-spacing:.05em;opacity:.92}
+  .card .d{font-size:5.9pt;color:var(--muted);padding:.9mm 2.4mm;background:#f6f7f9;border-bottom:1px solid var(--line)}
+  .row{display:flex;align-items:center;gap:1.2mm;height:3.7mm;padding:0 2.4mm;border-bottom:1px solid #f0f1f3;font-size:6.4pt}
+  .row .dot{width:1.5mm;height:1.5mm;border-radius:50%;background:var(--ink);flex:none}
+  .row .dot.o{background:#fff;border:.25mm solid var(--ink)}
+  .row .c{font-family:"JetBrains Mono",monospace}
+  .row .c.key{font-weight:600}
+  .row .t{margin-left:auto;font-family:"JetBrains Mono",monospace;color:var(--muted);font-size:5.6pt}
+  .row .why{color:var(--muted);font-size:5.4pt;margin-left:1mm;font-style:italic}
+  .b{font-size:4.7pt;font-weight:700;padding:.2mm .8mm;border-radius:.6mm}
+  .b.pk{background:var(--pk);color:var(--pkt)} .b.fk{background:var(--fk);color:var(--fkt)}
+  .b.uq{background:var(--uq);color:var(--uqt)} .b.lk{background:var(--lk);color:var(--lkt)}
+  .aud{font-size:5.6pt;color:var(--muted);font-style:italic;padding:.8mm 2.4mm;border-bottom:1px solid var(--line)}
+  .ex{padding:1mm 1.6mm 1.4mm;background:#fbfbfc}
+  .ex .lbl{font-size:5.2pt;font-weight:700;letter-spacing:.06em;color:var(--muted);margin:0 0 .6mm .4mm}
+  .ex table{border-collapse:collapse;width:100%}
+  .ex th{font-family:"JetBrains Mono",monospace;font-size:5.2pt;color:var(--muted);text-align:left;font-weight:600;padding:.5mm 1mm;border-bottom:1px solid var(--line);background:#f2f3f5}
+  .ex td{font-family:"JetBrains Mono",monospace;font-size:5.6pt;padding:.5mm 1mm;border-bottom:1px solid #eef0f2;white-space:nowrap}
+  .ex tr.nw td{background:var(--new)}
+  .note{border:1px solid #ecd9a6;background:#fff8e6;border-radius:1.6mm;padding:2mm 2.6mm;font-size:6.4pt;line-height:1.45}
+  .note h5{margin:0 0 1mm;font-size:6.9pt}
+  .note ul,.note ol{margin:0;padding-left:3.5mm}
+  .mono{font-family:"JetBrains Mono",monospace}
+  .ok{color:var(--newt);font-weight:700} .no{color:#b42318;font-weight:700}
+  svg.links{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+  .foot{position:absolute;left:8mm;right:8mm;bottom:3mm;font-size:6pt;color:var(--muted);display:flex;justify-content:space-between}
+  /* comparison page */
+  .dt{background:#fff;border:1px solid #d5d9df;border-radius:1.6mm;overflow:hidden}
+  .dt .h{display:flex;justify-content:space-between;align-items:center;padding:1.2mm 2.4mm;color:#fff}
+  .dt .h .n{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:7.4pt}
+  .dt .h .k{font-size:5.6pt;font-weight:600}
+  .dt table{border-collapse:collapse;width:100%}
+  .dt th{background:#f6f7f9;font-size:6pt;color:var(--muted);text-align:left;font-weight:600;padding:.9mm 1.8mm;border-bottom:1px solid var(--line)}
+  .dt td{font-size:6.5pt;padding:.9mm 1.8mm;border-bottom:1px solid #f0f1f3;vertical-align:top}
+  .sql{font-family:"JetBrains Mono",monospace;font-size:6.3pt;background:#f6f7f9;padding:2mm 2.6mm;white-space:pre;line-height:1.5;margin:0}
+  .sql .cm{color:#8a929c}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
+  .vs{display:flex;flex-direction:column;gap:3mm}
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 : LEGACY ================= -->
+<section class="page" id="p1">
+  <svg class="links"></svg>
+  <div class="hdr">
+    <div class="logo" style="background:var(--slate)"></div>
+    <div><div class="ttl">Legacy Billing – code version data model</div><div class="sub">SQL Server · Accumed · dbo · pattern: one table per regulator + code type, one bit column per code year</div></div>
+    <div class="pill" style="background:var(--slate)">REFERENCE V1</div>
+    <div class="meta"><b>●</b> Medical code versions (ICD / CPT / HCPCS) · 5 Nov 2026 · Prepared by Kuhan</div>
+  </div>
+  <div class="legend">
+    <span><b>Generalised names</b>&nbsp; <span class="mono">&lt;REG&gt;</span> = DHA · HAAD &nbsp; <span class="mono">&lt;TYPE&gt;</span> = ICD10 · CPT(S) · HCPCS &nbsp; <span class="mono">[YYYY]</span> = one bit column per code year</span>
+    <span class="lg"><svg viewBox="0 0 34 12"><line x1="2" y1="6" x2="32" y2="6" stroke="#555" stroke-width="1.2"/><line x1="5" y1="1" x2="5" y2="11" stroke="#555" stroke-width="1.2"/><line x1="8" y1="1" x2="8" y2="11" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="1" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="11" stroke="#555" stroke-width="1.2"/></svg> one-to-many</span>
+    <span class="lg"><svg viewBox="0 0 34 12"><line x1="2" y1="6" x2="32" y2="6" stroke="#555" stroke-width="1.2" stroke-dasharray="3 2"/></svg> logical (no FK – read / join in view)</span>
+    <span class="lg"><span class="b pk">PK</span><span class="b lk">LK</span> logical key</span>
+    <span class="lg"><span style="background:var(--new);padding:.2mm 1.2mm;border-radius:.6mm;color:var(--newt);font-weight:600">green row</span> example of a newly added year / code</span>
+  </div>
+
+  <div class="cols" style="grid-template-columns:64mm 108mm 1fr">
+    <div class="col"><h4>FACILITY → CODE SET</h4><div class="stack" data-slot="ACCUMED_FACILITY,ACCUMED_CODE_SET_VERSION"></div></div>
+    <div class="col"><h4>CODE TABLES (STORAGE)</h4><div class="stack">
+      <div data-slot="ACCUMED_REG_TYPE"></div>
+      <div class="note">
+        <h5>Pattern rules</h5>
+        <ul>
+          <li>One table per regulator + code type, e.g. <span class="mono">ACCUMED_DHA_ICD10</span>, <span class="mono">ACCUMED_DHA_CPT</span>, <span class="mono">ACCUMED_DHA_HCPCS</span>, <span class="mono">ACCUMED_HAAD_CPTS</span>.</li>
+          <li>One row per code. The code years it belongs to = bit columns <span class="mono">[2012] [2018] [2021] …</span></li>
+          <li><b>New code year</b> = schema change: <span class="mono">ALTER TABLE ADD [YYYY]</span> on every table + view change.</li>
+          <li>No FKs: tables are joined only inside the view.</li>
+        </ul>
+      </div></div></div>
+    <div class="col"><h4>VIEW (FILTER) → UI</h4><div class="stack">
+      <div data-slot="CODE_DESCRIPTION_VERSIONED"></div>
+      <div class="note">
+        <h5>How the UI picks codes</h5>
+        <ol>
+          <li>Facility → its code set (<span class="mono">ACCUMED_CODE_SET_VERSION</span>, e.g. 2 = DHA).</li>
+          <li>View section for that code set filters code rows by year flag + row dates.</li>
+          <li>App keeps rows where the encounter date is between <span class="mono">effective_date</span> and <span class="mono">EXPIRY_DATE</span> (ICD: end date · activity codes: start date).</li>
+        </ol>
+      </div></div></div>
+  </div>
+  <div class="foot"><span>Page 1 of 3 · Legacy model</span><span>Example rows are illustrative (facility 20065 / MF2195 and codes taken from the live view sample)</span></div>
+</section>
+
+<!-- ================= PAGE 2 : UNIFIED BILLING ================= -->
+<section class="page" id="p2">
+  <svg class="links"></svg>
+  <div class="hdr">
+    <div class="logo"></div>
+    <div><div class="ttl">Unified Billing – code version data model</div><div class="sub">Postgres · billing · public · pattern: code + version + link table per code type, active version set per regulator by date</div></div>
+    <div class="pill">REFERENCE V1</div>
+    <div class="meta"><b>●</b> Medical code versions (ICD / CPT / HCPCS / DRG) · 5 Nov 2026 · Prepared by Kuhan</div>
+  </div>
+  <div class="legend">
+    <span><b>Generalised names</b>&nbsp; <span class="mono">&lt;x&gt;</span> = diagnosis (ICD) · procedure (CPT) · consumable (HCPCS) · drg</span>
+    <span class="lg"><svg viewBox="0 0 34 12"><line x1="2" y1="6" x2="32" y2="6" stroke="#555" stroke-width="1.2"/><line x1="5" y1="1" x2="5" y2="11" stroke="#555" stroke-width="1.2"/><line x1="8" y1="1" x2="8" y2="11" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="1" stroke="#555" stroke-width="1.2"/><line x1="24" y1="6" x2="32" y2="11" stroke="#555" stroke-width="1.2"/></svg> one-to-many (FK)</span>
+    <span class="lg"><span style="width:1.5mm;height:1.5mm;border-radius:50%;background:#1f2933;display:inline-block"></span> NOT NULL</span>
+    <span class="lg"><span style="width:1.5mm;height:1.5mm;border-radius:50%;border:.25mm solid #1f2933;display:inline-block"></span> nullable</span>
+    <span class="lg"><span class="b pk">PK</span><span class="b fk">FK</span><span class="b uq">UQ</span> keys · <span class="b uq">UQ*</span> = unique (code, regulator_id)</span>
+    <span class="lg"><span style="background:var(--new);padding:.2mm 1.2mm;border-radius:.6mm;color:var(--newt);font-weight:600">green row</span> example of a newly added year / code</span>
+  </div>
+
+  <div class="cols" style="grid-template-columns:76mm 55mm 52mm 1fr">
+    <div class="col"><h4>CODES – ONE ROW PER CODE PER REGULATOR</h4><div class="stack" data-slot="x_code"></div></div>
+    <div class="col"><h4>MASTER · CODE ↔ VERSION LINK</h4><div class="stack" data-slot="regulators,x_code_version"></div></div>
+    <div class="col"><h4>VERSIONS – ONE ROW PER YEAR</h4><div class="stack" data-slot="x_version"></div></div>
+    <div class="col"><h4>ACTIVE VERSION SET BY DATE</h4><div class="stack">
+      <div data-slot="regulator_codebase"></div>
+      <div class="note">
+        <h5>Pattern rules</h5>
+        <ul>
+          <li>Same 3 tables for every code type: <span class="mono">&lt;x&gt;_code</span>, <span class="mono">&lt;x&gt;_version</span>, <span class="mono">&lt;x&gt;_code_version</span>.</li>
+          <li>A code row is shared by all its years; the link table says which years.</li>
+          <li><b>New code year</b> = data only: +1 version row, new codes, links, a <span class="mono">regulator_codebase</span> row. No schema change.</li>
+          <li>App: regulator + encounter date → <span class="mono">regulator_codebase</span> row → version ids → allowed codes via links.</li>
+        </ul>
+      </div></div></div>
+  </div>
+  <div class="foot"><span>Page 2 of 3 · Unified Billing model</span><span>Structure from staging billing_migration (5 Nov 2026) · ids shortened (r-dha, v21, c1 …)</span></div>
+</section>
+
+<!-- ================= PAGE 3 : COMPARISON ================= -->
+<section class="page" id="p3">
+  <div class="hdr">
+    <div class="logo" style="background:var(--plum)"></div>
+    <div><div class="ttl">Legacy vs Unified Billing – same concept, two designs</div><div class="sub">Concept mapping · code lookup query in each system · adding a new code year</div></div>
+    <div class="pill" style="background:var(--plum)">REFERENCE V1</div>
+    <div class="meta"><b>●</b> Medical code versions · 5 Nov 2026 · Prepared by Kuhan</div>
+  </div>
+
+  <div class="dt" style="margin-top:3mm"><div class="h" style="background:var(--plum)"><span class="n">Concept mapping</span><span class="k">LEGACY → UB</span></div>
+    <table><tr><th style="width:17%">concept</th><th style="width:30%">Legacy (SQL Server)</th><th style="width:30%">Unified Billing (Postgres)</th><th>difference</th></tr>
+      <tr><td><b>Code list</b></td><td class="mono">ACCUMED_&lt;REG&gt;_&lt;TYPE&gt;</td><td class="mono">&lt;x&gt;_code (+ regulator_id)</td><td>Legacy: table per regulator · UB: one table, regulator as a column</td></tr>
+      <tr><td><b>Code year</b></td><td class="mono">[2012] [2018] [2021] bit columns</td><td class="mono">&lt;x&gt;_version rows</td><td>Column per year vs row per year</td></tr>
+      <tr><td><b>Code ↔ year</b></td><td>flag = 1 on the code row</td><td class="mono">&lt;x&gt;_code_version link rows</td><td>Flag vs many-to-many link table</td></tr>
+      <tr><td><b>Which set a facility / regulator uses</b></td><td class="mono">ACCUMED_CODE_SET_VERSION (facility → set)</td><td class="mono">regulator_codebase (regulator → versions + dates)</td><td>UB adds start / end dates for the switch</td></tr>
+      <tr><td><b>Validity by date</b></td><td>row dates + rules inside the view</td><td><span class="mono">regulator_codebase.start_date / end_date</span></td><td>Logic in a view vs data in a table</td></tr>
+      <tr><td><b>Read layer</b></td><td class="mono">CODE_DESCRIPTION_VERSIONED (view)</td><td>APIs / joins on the tables</td><td>Legacy UI reads only the view</td></tr>
+      <tr><td><b>Integrity</b></td><td>no FKs</td><td>FKs + unique (code, regulator_id)</td><td>UB enforced by the database</td></tr>
+      <tr><td><b>New code year</b></td><td>schema change + data + view change</td><td>data only</td><td>UB built for yearly updates</td></tr>
+    </table></div>
+
+  <div class="g2" style="margin-top:3.5mm">
+    <div class="vs">
+      <div class="dt"><div class="h" style="background:var(--slate)"><span class="n">Legacy – codes a facility can pick</span><span class="k">SQL SERVER · ACCUMED</span></div>
+<pre class="sql"><span class="cm">-- ICD codes valid for facility MF2195 on 05-Jan-2027</span>
+SELECT CODE, DESCRIPTION, effective_date, EXPIRY_DATE
+FROM dbo.CODE_DESCRIPTION_VERSIONED
+WHERE FACILITY_LICENSE = 'MF2195'
+  AND type = 0                                   <span class="cm">-- 0 ICD · 3 CPT · 4 HCPCS</span>
+  AND '2027-01-05' BETWEEN effective_date AND EXPIRY_DATE;</pre></div>
+      <div class="note"><h5>Add a new code year – legacy</h5><ol>
+        <li>Back up code tables + script the view.</li>
+        <li><span class="mono">ALTER TABLE … ADD [YYYY] bit</span> on each code table.</li>
+        <li>Flag codes in the new file; insert new codes with the new start date.</li>
+        <li>View: add <span class="mono">OR ([YYYY]=1 AND start &gt;= cut-over)</span> in that regulator's section; end discontinued codes the day before.</li>
+        <li>Test the UI list before / after the cut-over date.</li></ol></div>
+    </div>
+    <div class="vs">
+      <div class="dt"><div class="h" style="background:var(--blue)"><span class="n">Unified Billing – codes valid for a claim</span><span class="k">POSTGRES · BILLING</span></div>
+<pre class="sql"><span class="cm">-- ICD codes valid for DHA on encounter end date 05-Jan-2027</span>
+SELECT c.code, c.short_description
+FROM regulator_codebase rc
+JOIN diagnosis_code_version cv ON cv.diagnosis_version_id = rc.diagnosis_version_id
+JOIN diagnosis_code c ON c.id = cv.diagnosis_code_id
+                     AND c.regulator_id = rc.regulator_id
+WHERE rc.regulator_id = '3835f537-1b2e-4069-b306-1295f8e7502d'  <span class="cm">-- DHA</span>
+  AND DATE '2027-01-05' BETWEEN rc.start_date AND rc.end_date;</pre></div>
+      <div class="note"><h5>Add a new code year – UB</h5><ol>
+        <li>+1 row in each <span class="mono">&lt;x&gt;_version</span> (version API).</li>
+        <li>Upload the code file per regulator (code upload API): existing codes → link only, new codes → row + link.</li>
+        <li>Close the current <span class="mono">regulator_codebase</span> row (end date) and add a new one from the cut-over date.</li>
+        <li>Validate counts, orphan / duplicate links, sample claims.</li></ol></div>
+    </div>
+  </div>
+  <div class="foot"><span>Page 3 of 3 · Comparison</span><span>Reference for future code-year updates (DHA, HAAD, Riayati) and for new code-set designs</span></div>
+</section>
+
+<script>
+const AUD="+ created / created_by / last_updated / deleted … (audit)";
+const T={
+  /* ---------- legacy ---------- */
+  ACCUMED_FACILITY:{c:"var(--grey)",k:"MASTER",d:"Facilities (providers).",
+    cols:[["FACILITY_ID","int","PK",1],["FACILITY_LICENSE","nvarchar","",0],["… other facility columns","","",0]],
+    ex:{h:["FACILITY_ID","FACILITY_LICENSE"],r:[["20065","MF2195"],["20101","MF3001"]]}},
+  ACCUMED_CODE_SET_VERSION:{c:"var(--orange)",k:"CONFIG",d:"Which code set each facility uses.",
+    cols:[["provider_id","int","FK",1],["version_lv_id","int","LK",1,"1 HAAD · 2 DHA · 3 WHO · 4 Riayati"],["effective_date","datetime","",0],["expiry_date","datetime","",0]],
+    ex:{h:["provider_id","version_lv_id","effective_date","expiry_date"],r:[["20065","2 (DHA)","2010-01-01","2025-12-31"],["20101","4 (Riayati)","2015-01-01","…"]]}},
+  ACCUMED_REG_TYPE:{name:"ACCUMED_<REG>_<TYPE>",c:"var(--slate)",k:"REFERENCE",d:"e.g. ACCUMED_DHA_ICD10 · one row per code · year = bit column.",
+    cols:[["ID","int","PK",1],["Code","nvarchar","LK",1],["ShortDesc / LongDesc","nvarchar","",1],["EFFECTIVE_START_DATE","datetime","",0],["EFFECTIVE_DELETE_DATE","datetime","",0],["[2012] [2018] [2021]","bit","",0],["[2024]","bit","",0,"new year = new column"]],
+    ex:{h:["ID","Code","ShortDesc","START","DELETE","2012","2018","2021","2024"],r:[["101","J06.9","Acute URI","2012-01-01","–","1","1","1","1"],["202","D48.1","Neoplasm conn. tissue","2012-01-01","–","1","1","1","0"],["9001","D48.110","Desmoid tumor head/neck","2027-01-01","–","0","0","0","1"]],nw:[2]}},
+  CODE_DESCRIPTION_VERSIONED:{c:"var(--teal)",k:"VIEW",d:"UNION of all code tables by code set; joined to code set + facility.",
+    cols:[["type","int","",1,"0 ICD · 3 CPT · 4 HCPCS …"],["CODE / DESCRIPTION","nvarchar","",0],["CODE_VERSION","int","LK",1,"= version_lv_id"],["provider_id / FACILITY_LICENSE","int / nvarchar","",0],["effective_date","datetime","",1],["EXPIRY_DATE","datetime","",1]],
+    ex:{h:["type","CODE","CODE_VERSION","FACILITY","effective","EXPIRY"],r:[["0","J06.9","2","MF2195","2012-01-01","…"],["0","D48.1","2","MF2195","2012-01-01","2026-12-31"],["0","D48.110","2","MF2195","2027-01-01","…"]],nw:[1,2]}},
+  /* ---------- UB ---------- */
+  regulators:{c:"var(--grey)",k:"MASTER",d:"Regulators.",cols:[["id","uuid","PK",1],["name …","","",0]],
+    ex:{h:["id","name"],r:[["r-dha","DHA"],["r-haad","HAAD"],["r-ria","RIAYATI"]]}},
+  x_code:{name:"<x>_code",c:"var(--blue)",k:"REFERENCE",d:"e.g. diagnosis_code · one row per code per regulator.",
+    cols:[["id","uuid","PK",1],["code","varchar","UQ*",1],["regulator_id","uuid","FK",1],["short_description","text","",1],["long_description","text","",1],["effective_date","timestamp","",1],["expiry_date","timestamp","",1]],
+    aud:"+ type-specific cols (e.g. consumable: high_cost_consumables, translated_medicare_price) · audit",
+    ex:{h:["id","code","regulator","short_description","effective"],r:[["c1","J06.9","r-dha","Acute URI","2012-01-01"],["c2","D48.1","r-dha","Neoplasm conn. tissue","2012-01-01"],["c3","D48.110","r-dha","Desmoid tumor head/neck","2027-01-01"],["c9","J06.9","r-haad","Acute URI","2012-01-01"]],nw:[2]}},
+  x_code_version:{name:"<x>_code_version",c:"var(--green)",k:"LINK",d:"Which years a code belongs to.",
+    cols:[["id","uuid","PK",1],["<x>_code_id","uuid","FK",1],["<x>_version_id","uuid","FK",1]],aud:AUD,
+    ex:{h:["code_id","version_id"],r:[["c1 J06.9","v21"],["c1 J06.9","v24"],["c2 D48.1","v21"],["c3 D48.110","v24"]],nw:[1,3]}},
+  x_version:{name:"<x>_version",c:"var(--plum)",k:"REFERENCE",d:"e.g. diagnosis_version · one row per code year.",
+    cols:[["id","uuid","PK",1],["name","varchar","UQ",1],["release","varchar","UQ",1],["year","int","",1]],aud:AUD,
+    ex:{h:["id","name","release","year"],r:[["v18","ICD 10 CM 2018","2018","2018"],["v21","ICD 10 CM 2021","2021","2021"],["v24","ICD 10 CM 2024","2024","2024"]],nw:[2]}},
+  regulator_codebase:{c:"var(--orange)",k:"CONFIG",d:"Version set a regulator uses between two dates.",
+    cols:[["id","uuid","PK",1],["regulator_id","uuid","FK",1],["diagnosis_version_id","uuid","FK",1],["procedure_version_id","uuid","FK",1],["consumable_version_id","uuid","FK",1],["drg_version_id","uuid","FK",1],["start_date","date","",1],["end_date","date","",1]],aud:AUD,
+    ex:{h:["reg","diag","proc","cons","drg","start","end"],r:[["r-dha","v21","p21","cs21","d16","2023-07-01","2026-12-31"],["r-dha","v24","p24","cs24","d16","2027-01-01","2030-12-31"]],nw:[1]}}
+};
+/* relationships: [oneTable, oneCol, manyTable, manyCol, color, dashed, route] */
+const R=[
+  ["ACCUMED_FACILITY","FACILITY_ID","ACCUMED_CODE_SET_VERSION","provider_id","#6f7782",0,"left"],
+  ["ACCUMED_REG_TYPE","Code","CODE_DESCRIPTION_VERSIONED","CODE / DESCRIPTION","#2f7f7a",1],
+  ["ACCUMED_CODE_SET_VERSION","version_lv_id","CODE_DESCRIPTION_VERSIONED","CODE_VERSION","#b8621b",1,"top"],
+  ["regulators","id","x_code","regulator_id","#8a929c"],
+  ["x_code","id","x_code_version","<x>_code_id","#3f7a4f"],
+  ["x_version","id","x_code_version","<x>_version_id","#5b3f9b"],
+  ["x_version","id","regulator_codebase","diagnosis_version_id","#b8621b"],
+  ["regulators","id","regulator_codebase","regulator_id","#b8621b",0,"top"]
+];
+function badge(k){ if(!k) return ""; const c=k.startsWith("PK")?"pk":k.startsWith("FK")?"fk":k.startsWith("LK")?"lk":"uq"; return `<span class="b ${c}">${k}</span>`; }
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function card(id){
+  const t=T[id]; const nm=t.name||id;
+  let h=`<div class="card" data-t="${id}"><div class="h" style="background:${t.c}"><span class="n">${esc(nm)}</span><span class="k">${t.k}</span></div><div class="d">${esc(t.d)}</div>`;
+  for(const [c,ty,k,nn,why] of t.cols){
+    h+=`<div class="row" data-c="${esc(c)}"><span class="dot${nn?"":" o"}"></span><span class="c${k==="PK"?" key":""}">${esc(c)}</span>${badge(k)}${why?`<span class="why">${esc(why)}</span>`:""}<span class="t">${esc(ty)}</span></div>`;
+  }
+  if(t.aud) h+=`<div class="aud">${esc(t.aud)}</div>`;
+  if(t.ex){
+    h+=`<div class="ex"><div class="lbl">EXAMPLE ROWS</div><table><tr>${t.ex.h.map(x=>`<th>${esc(x)}</th>`).join("")}</tr>`;
+    t.ex.r.forEach((r,i)=>{ h+=`<tr${(t.ex.nw||[]).includes(i)?' class="nw"':""}>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`; });
+    h+=`</table></div>`;
+  }
+  return h+"</div>";
+}
+document.querySelectorAll("[data-slot]").forEach(s=>{ s.innerHTML=s.dataset.slot.split(",").map(card).join(""); });
+
+function draw(){
+  document.querySelectorAll(".page").forEach(page=>{
+    const svg=page.querySelector("svg.links"); if(!svg) return; svg.innerHTML="";
+    const P=page.getBoundingClientRect(); const sc=P.width/page.offsetWidth||1;
+    const rel=r=>({l:(r.left-P.left)/sc,r:(r.right-P.left)/sc,t:(r.top-P.top)/sc,b:(r.bottom-P.top)/sc});
+    const cards=[...page.querySelectorAll(".card")]; if(!cards.length) return;
+    const top=Math.min(...cards.map(c=>rel(c.getBoundingClientRect()).t));
+    let html="";
+    for(const [a,ac,b,bc,col,dash,route] of R){
+      const ra=page.querySelector(`[data-t="${a}"] [data-c="${CSS.escape(ac)}"]`), rb=page.querySelector(`[data-t="${b}"] [data-c="${CSS.escape(bc)}"]`);
+      if(!ra||!rb) continue;
+      const A=rel(ra.getBoundingClientRect()), B=rel(rb.getBoundingClientRect());
+      const ay=(A.t+A.b)/2, by=(B.t+B.b)/2;
+      let ax,bx,da,db,d;
+      if(route==="left"){ ax=A.l; bx=B.l; da=-1; db=-1; d=`M${ax},${ay} C${ax-22},${ay} ${bx-22},${by} ${bx},${by}`; }
+      else{
+        const right=(A.l+A.r)/2<(B.l+B.r)/2;
+        ax=right?A.r:A.l; bx=right?B.l:B.r; da=right?1:-1; db=-da;
+        if(route==="top"){ const lane=top-2.4*3.78, x1=ax+da*8, x2=bx+db*10; d=`M${ax},${ay} H${x1} V${lane} H${x2} V${by} H${bx}`; }
+        else{ const dx=Math.max(18,Math.abs(bx-ax)/2); d=`M${ax},${ay} C${ax+da*dx},${ay} ${bx+db*dx},${by} ${bx},${by}`; }
+      }
+      html+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="1" ${dash?'stroke-dasharray="4 3"':''} opacity=".9"/>`;
+      if(!dash){
+        for(const o of [5,8]) html+=`<line x1="${ax+da*o}" y1="${ay-4}" x2="${ax+da*o}" y2="${ay+4}" stroke="${col}" stroke-width="1"/>`;
+        const fx=bx+db*8;
+        html+=`<line x1="${fx}" y1="${by}" x2="${bx}" y2="${by-4}" stroke="${col}" stroke-width="1"/><line x1="${fx}" y1="${by}" x2="${bx}" y2="${by+4}" stroke="${col}" stroke-width="1"/>`;
+      }else{
+        html+=`<circle cx="${bx+db*2}" cy="${by}" r="1.6" fill="${col}"/>`;
+      }
+    }
+    svg.innerHTML=html;
+  });
+}
+window.addEventListener("load",draw); window.addEventListener("resize",draw); window.addEventListener("beforeprint",draw);
+if(document.fonts) document.fonts.ready.then(draw);
+</script>
+</body>
+</html>
