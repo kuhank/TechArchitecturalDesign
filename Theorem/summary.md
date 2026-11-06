@@ -4,12 +4,21 @@ Daily learning notes on theorems and core concepts, discussed and captured sessi
 
 ## Status
 - Started: 06 Nov 2026
+- Day 1 led to a research paper: **Selective Chaos Control** (see below).
 
 ## Topics covered
-_(none yet)_
+| Date | Topic | Notes |
+|---|---|---|
+| 06 Nov 2026 | Chaos theory, Poincaré–Bendixson, strange attractors, Lyapunov exponent, predictability horizon, chaos control, link to LLMs | `v1_2026-11-06_chaos_theory.md` |
+
+## Projects
+| Folder | What |
+|---|---|
+| `SelectiveChaosControl/` | Paper and prototype applying chaos control to LLM agents. Start with its `summary.md` |
 
 ## Open questions / next
-_(none yet)_
+- SCC paper: provisional patent → real text-to-SQL experiment → submit (details in `SelectiveChaosControl/summary.md`).
 
 ## Detail files
-_(added as topics are covered)_
+- `v1_2026-11-06_chaos_theory.md`: Day 1 notes
+- `SelectiveChaosControl/summary.md`: paper project summary

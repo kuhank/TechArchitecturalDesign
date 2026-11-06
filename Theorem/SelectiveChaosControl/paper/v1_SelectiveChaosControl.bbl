@@ -1,0 +1,457 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{lorenz1963}
+E.~N. Lorenz, Deterministic nonperiodic flow, J. Atmos. Sci. 20~(2) (1963)
+  130--141.
+\newblock \href {https://doi.org/10.1175/1520-0469(1963)020<0130:DNF>2.0.CO;2}
+  {\path{doi:10.1175/1520-0469(1963)020<0130:DNF>2.0.CO;2}}.
+
+\bibitem{lorenz1969}
+E.~N. Lorenz, The predictability of a flow which possesses many scales of
+  motion, Tellus 21~(3) (1969) 289--307.
+\newblock \href {https://doi.org/10.3402/tellusa.v21i3.10086}
+  {\path{doi:10.3402/tellusa.v21i3.10086}}.
+
+\bibitem{zhang2019}
+F.~Zhang, Y.~Q. Sun, L.~Magnusson, R.~Buizza, S.-J. Lin, J.-H. Chen,
+  K.~Emanuel, What is the predictability limit of midlatitude weather?, J.
+  Atmos. Sci. 76~(4) (2019) 1077--1091.
+\newblock \href {https://doi.org/10.1175/JAS-D-18-0269.1}
+  {\path{doi:10.1175/JAS-D-18-0269.1}}.
+
+\bibitem{ott1990}
+E.~Ott, C.~Grebogi, J.~A. Yorke, Controlling chaos, Phys. Rev. Lett. 64~(11)
+  (1990) 1196--1199.
+\newblock \href {https://doi.org/10.1103/PhysRevLett.64.1196}
+  {\path{doi:10.1103/PhysRevLett.64.1196}}.
+
+\bibitem{shinbrot1993}
+T.~Shinbrot, C.~Grebogi, E.~Ott, J.~A. Yorke, Using small perturbations to
+  control chaos, Nature 363 (1993) 411--417.
+\newblock \href {https://doi.org/10.1038/363411a0}
+  {\path{doi:10.1038/363411a0}}.
+
+\bibitem{boccaletti2000}
+S.~Boccaletti, C.~Grebogi, Y.-C. Lai, H.~Mancini, D.~Maza, The control of
+  chaos: theory and applications, Phys. Rep. 329~(3) (2000) 103--197.
+\newblock \href {https://doi.org/10.1016/S0370-1573(99)00096-4}
+  {\path{doi:10.1016/S0370-1573(99)00096-4}}.
+
+\bibitem{sclar2024}
+M.~Sclar, Y.~Choi, Y.~Tsvetkov, A.~Suhr, Quantifying language models'
+  sensitivity to spurious features in prompt design, in: International
+  Conference on Learning Representations (ICLR), 2024, arXiv:2310.11324.
+
+\bibitem{salinas2024}
+A.~Salinas, F.~Morstatter, The butterfly effect of altering prompts: how small
+  changes and jailbreaks affect large language model performance, in: Findings
+  of ACL, 2024, pp. 4629--4651.
+\newblock \href {https://doi.org/10.18653/v1/2024.findings-acl.275}
+  {\path{doi:10.18653/v1/2024.findings-acl.275}}.
+
+\bibitem{bigelow2025}
+E.~Bigelow, A.~Holtzman, H.~Tanaka, T.~Ullman, Forking paths in neural text
+  generation, in: International Conference on Learning Representations (ICLR),
+  2025, arXiv:2412.07961.
+
+\bibitem{zhang2024snowball}
+M.~Zhang, O.~Press, W.~Merrill, A.~Liu, N.~A. Smith, How language model
+  hallucinations can snowball, in: Proc. ICML, PMLR 235, 2024, pp.
+  59670--59684.
+
+\bibitem{sinha2026}
+A.~Sinha, A.~Arun, S.~Goel, S.~Staab, J.~Geiping, The illusion of diminishing
+  returns: measuring long horizon execution in {LLMs}, in: International
+  Conference on Learning Representations (ICLR), 2026, arXiv:2509.09677.
+
+\bibitem{li2025quasi}
+X.~Li, Y.~Leng, R.~Ding, H.~Mo, S.~Yang, Cognitive activation and chaotic
+  dynamics in large language models: a quasi-{L}yapunov analysis of reasoning
+  mechanisms, arXiv:2503.13530 (2025).
+
+\bibitem{jaca2026}
+G.~Jaca, J.~T{\"o}r{\"o}k, K.~Benedek, Chaos in reason: how chain-of-thought
+  {LLMs} can look for an answer, arXiv:2607.27805 (2026).
+
+\bibitem{jones2026}
+D.~Jones, Chaos and bifurcations in continuous language-model feedback,
+  arXiv:2610.31692 (2026).
+
+\bibitem{shimao2026}
+H.~Shimao, W.~Khern-am nuai, K.~Kim, Collective {AI} can amplify tiny
+  perturbations into divergent decisions, arXiv:2603.09127 (2026).
+
+\bibitem{kuhn2023}
+L.~Kuhn, Y.~Gal, S.~Farquhar, Semantic uncertainty: linguistic invariances for
+  uncertainty estimation in natural language generation, in: International
+  Conference on Learning Representations (ICLR), 2023, arXiv:2302.09664.
+
+\bibitem{farquhar2024}
+S.~Farquhar, J.~Kossen, L.~Kuhn, Y.~Gal, Detecting hallucinations in large
+  language models using semantic entropy, Nature 630~(8017) (2024) 625--630.
+\newblock \href {https://doi.org/10.1038/s41586-024-07421-0}
+  {\path{doi:10.1038/s41586-024-07421-0}}.
+
+\bibitem{manakul2023}
+P.~Manakul, A.~Liusie, M.~J.~F. Gales, {SelfCheckGPT}: zero-resource black-box
+  hallucination detection for generative large language models, in: Proc.
+  EMNLP, 2023, pp. 9004--9017.
+\newblock \href {https://doi.org/10.18653/v1/2023.emnlp-main.557}
+  {\path{doi:10.18653/v1/2023.emnlp-main.557}}.
+
+\bibitem{luan2026}
+B.~Luan, G.~Li, Y.~Qin, J.~Guo, Y.~Zhou, F.~Wu, H.~Zheng, W.~Wu, Z.~Fan,
+  Lyapunov probes for hallucination detection in large foundation models, in:
+  Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR),
+  2026, pp. 25336--25346.
+
+\bibitem{wang2023sc}
+X.~Wang, J.~Wei, D.~Schuurmans, Q.~Le, E.~Chi, S.~Narang, et~al.,
+  Self-consistency improves chain of thought reasoning in language models, in:
+  International Conference on Learning Representations (ICLR), 2023,
+  arXiv:2203.11171.
+
+\bibitem{lightman2024}
+H.~Lightman, V.~Kosaraju, Y.~Burda, H.~Edwards, B.~Baker, T.~Lee, et~al., Let's
+  verify step by step, in: International Conference on Learning Representations
+  (ICLR), 2024.
+
+\bibitem{bertschinger2004}
+N.~Bertschinger, T.~Natschl{\"a}ger, Real-time computation at the edge of chaos
+  in recurrent neural networks, Neural Comput. 16~(7) (2004) 1413--1436.
+\newblock \href {https://doi.org/10.1162/089976604323057443}
+  {\path{doi:10.1162/089976604323057443}}.
+
+\bibitem{poole2016}
+B.~Poole, S.~Lahiri, M.~Raghu, J.~Sohl-Dickstein, S.~Ganguli, Exponential
+  expressivity in deep neural networks through transient chaos, in: Advances in
+  Neural Information Processing Systems (NeurIPS), 2016.
+
+\bibitem{schoenholz2017}
+S.~S. Schoenholz, J.~Gilmer, S.~Ganguli, J.~Sohl-Dickstein, Deep information
+  propagation, in: International Conference on Learning Representations (ICLR),
+  2017.
+
+\bibitem{strogatz2015}
+S.~H. Strogatz, Nonlinear Dynamics and Chaos: With Applications to Physics,
+  Biology, Chemistry, and Engineering, 2nd Edition, Westview Press, Boulder,
+  CO, 2015.
+
+\bibitem{perko2001}
+L.~Perko, Differential Equations and Dynamical Systems, 3rd Edition, Vol.~7 of
+  Texts in Applied Mathematics, Springer, New York, 2001.
+
+\bibitem{rossler1976}
+O.~E. R{\"o}ssler, An equation for continuous chaos, Phys. Lett. A 57~(5)
+  (1976) 397--398.
+\newblock \href {https://doi.org/10.1016/0375-9601(76)90101-8}
+  {\path{doi:10.1016/0375-9601(76)90101-8}}.
+
+\bibitem{thomas1999}
+R.~Thomas, Deterministic chaos seen in terms of feedback circuits: analysis,
+  synthesis, ``labyrinth chaos'', Int. J. Bifurcation Chaos 9~(10) (1999)
+  1889--1905.
+\newblock \href {https://doi.org/10.1142/S0218127499001383}
+  {\path{doi:10.1142/S0218127499001383}}.
+
+\bibitem{rucklidge1992}
+A.~M. Rucklidge, Chaos in models of double convection, J. Fluid Mech. 237
+  (1992) 209--229.
+\newblock \href {https://doi.org/10.1017/S0022112092003392}
+  {\path{doi:10.1017/S0022112092003392}}.
+
+\bibitem{sprott2010}
+J.~C. Sprott, Elegant Chaos: Algebraically Simple Chaotic Flows, World
+  Scientific, Singapore, 2010.
+
+\bibitem{rossler1979}
+O.~E. R{\"o}ssler, An equation for hyperchaos, Phys. Lett. A 71~(2--3) (1979)
+  155--157.
+\newblock \href {https://doi.org/10.1016/0375-9601(79)90150-6}
+  {\path{doi:10.1016/0375-9601(79)90150-6}}.
+
+\bibitem{wolf1985}
+A.~Wolf, J.~B. Swift, H.~L. Swinney, J.~A. Vastano, Determining {L}yapunov
+  exponents from a time series, Physica D 16~(3) (1985) 285--317.
+\newblock \href {https://doi.org/10.1016/0167-2789(85)90011-9}
+  {\path{doi:10.1016/0167-2789(85)90011-9}}.
+
+\bibitem{rosenstein1993}
+M.~T. Rosenstein, J.~J. Collins, C.~J. De~Luca, A practical method for
+  calculating largest {L}yapunov exponents from small data sets, Physica D
+  65~(1--2) (1993) 117--134.
+\newblock \href {https://doi.org/10.1016/0167-2789(93)90009-P}
+  {\path{doi:10.1016/0167-2789(93)90009-P}}.
+
+\bibitem{benettin1980}
+G.~Benettin, L.~Galgani, A.~Giorgilli, J.-M. Strelcyn, Lyapunov characteristic
+  exponents for smooth dynamical systems and for {H}amiltonian systems; a
+  method for computing all of them. {P}art 1: Theory, Meccanica 15 (1980)
+  9--20.
+\newblock \href {https://doi.org/10.1007/BF02128236}
+  {\path{doi:10.1007/BF02128236}}.
+
+\bibitem{shadden2005}
+S.~C. Shadden, F.~Lekien, J.~E. Marsden, Definition and properties of
+  {L}agrangian coherent structures from finite-time {L}yapunov exponents in
+  two-dimensional aperiodic flows, Physica D 212~(3--4) (2005) 271--304.
+\newblock \href {https://doi.org/10.1016/j.physd.2005.10.007}
+  {\path{doi:10.1016/j.physd.2005.10.007}}.
+
+\bibitem{pyragas1992}
+K.~Pyragas, Continuous control of chaos by self-controlling feedback, Phys.
+  Lett. A 170~(6) (1992) 421--428.
+\newblock \href {https://doi.org/10.1016/0375-9601(92)90745-8}
+  {\path{doi:10.1016/0375-9601(92)90745-8}}.
+
+\bibitem{belbruno1993}
+E.~A. Belbruno, J.~K. Miller, Sun-perturbed {E}arth-to-{M}oon transfers with
+  ballistic capture, J. Guid. Control Dyn. 16~(4) (1993) 770--775.
+\newblock \href {https://doi.org/10.2514/3.21079} {\path{doi:10.2514/3.21079}}.
+
+\bibitem{pecora1990}
+L.~M. Pecora, T.~L. Carroll, Synchronization in chaotic systems, Phys. Rev.
+  Lett. 64~(8) (1990) 821--824.
+\newblock \href {https://doi.org/10.1103/PhysRevLett.64.821}
+  {\path{doi:10.1103/PhysRevLett.64.821}}.
+
+\bibitem{kadavath2022}
+S.~Kadavath, et~al., Language models (mostly) know what they know,
+  arXiv:2207.05221 (2022).
+
+\bibitem{quach2024}
+V.~Quach, et~al., Conformal language modeling, in: International Conference on
+  Learning Representations (ICLR), 2024, arXiv:2306.10193.
+
+\bibitem{mohri2024}
+C.~Mohri, T.~Hashimoto, Language models with conformal factuality guarantees,
+  in: Proc. ICML, PMLR 235, 2024, arXiv:2402.10978.
+
+\bibitem{huang2025survey}
+L.~Huang, et~al., A survey on hallucination in large language models:
+  principles, taxonomy, challenges, and open questions, ACM Trans. Inf. Syst.
+  (2025).
+\newblock \href {https://doi.org/10.1145/3703155} {\path{doi:10.1145/3703155}}.
+
+\bibitem{zou2023repe}
+A.~Zou, et~al., Representation engineering: a top-down approach to {AI}
+  transparency, arXiv:2310.01405 (2023).
+
+\bibitem{turner2023}
+A.~M. Turner, et~al., Steering language models with activation engineering,
+  arXiv:2308.10248 (2023).
+
+\bibitem{li2023iti}
+K.~Li, O.~Patel, F.~Vi{\'e}gas, H.~Pfister, M.~Wattenberg, Inference-time
+  intervention: eliciting truthful answers from a language model, in: Advances
+  in Neural Information Processing Systems (NeurIPS), 2023.
+
+\bibitem{zhu2024adapt}
+Y.~Zhu, et~al., Hot or cold? {A}daptive temperature sampling for code
+  generation with large language models, in: Proc. AAAI Conference on
+  Artificial Intelligence, 2024, arXiv:2309.02772.
+
+\bibitem{zhang2024edt}
+S.~Zhang, et~al., {EDT}: improving large language models' generation by
+  entropy-based dynamic temperature sampling, arXiv:2403.14541 (2024).
+
+\bibitem{yao2023react}
+S.~Yao, J.~Zhao, D.~Yu, N.~Du, I.~Shafran, K.~Narasimhan, Y.~Cao, {ReAct}:
+  synergizing reasoning and acting in language models, in: International
+  Conference on Learning Representations (ICLR), 2023.
+
+\bibitem{shinn2023}
+N.~Shinn, F.~Cassano, A.~Gopinath, K.~Narasimhan, S.~Yao, Reflexion: language
+  agents with verbal reinforcement learning, in: Advances in Neural Information
+  Processing Systems (NeurIPS), 2023.
+
+\bibitem{madaan2023}
+A.~Madaan, et~al., Self-refine: iterative refinement with self-feedback, in:
+  Advances in Neural Information Processing Systems (NeurIPS), 2023.
+
+\bibitem{gou2024critic}
+Z.~Gou, Z.~Shao, Y.~Gong, Y.~Shen, Y.~Yang, N.~Duan, W.~Chen, {CRITIC}: large
+  language models can self-correct with tool-interactive critiquing, in:
+  International Conference on Learning Representations (ICLR), 2024.
+
+\bibitem{du2024debate}
+Y.~Du, S.~Li, A.~Torralba, J.~B. Tenenbaum, I.~Mordatch, Improving factuality
+  and reasoning in language models through multiagent debate, in: Proc. ICML,
+  PMLR 235, 2024.
+
+\bibitem{cemri2025}
+M.~Cemri, M.~Z. Pan, S.~Yang, L.~A. Agrawal, B.~Chopra, R.~Tiwari, et~al., Why
+  do multi-agent {LLM} systems fail?, arXiv:2503.13657 (2025).
+
+\bibitem{yu2018spider}
+T.~Yu, et~al., Spider: a large-scale human-labeled dataset for complex and
+  cross-domain semantic parsing and text-to-{SQL} task, in: Proc. EMNLP, 2018,
+  pp. 3911--3921.
+\newblock \href {https://doi.org/10.18653/v1/D18-1425}
+  {\path{doi:10.18653/v1/D18-1425}}.
+
+\bibitem{li2023bird}
+J.~Li, B.~Hui, G.~Qu, et~al., Can {LLM} already serve as a database interface?
+  {A} big bench for large-scale database grounded text-to-{SQLs}, in: Advances
+  in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks
+  Track, 2023.
+
+\bibitem{lei2025spider2}
+F.~Lei, J.~Chen, Y.~Ye, R.~Cao, D.~Shin, H.~Su, et~al., Spider 2.0: evaluating
+  language models on real-world enterprise text-to-{SQL} workflows, in:
+  International Conference on Learning Representations (ICLR), 2025.
+
+\bibitem{pourreza2023}
+M.~Pourreza, D.~Rafiei, {DIN-SQL}: decomposed in-context learning of
+  text-to-{SQL} with self-correction, in: Advances in Neural Information
+  Processing Systems (NeurIPS), 2023.
+
+\bibitem{gao2024dail}
+D.~Gao, H.~Wang, Y.~Li, X.~Sun, Y.~Qian, B.~Ding, J.~Zhou, Text-to-{SQL}
+  empowered by large language models: a benchmark evaluation, Proc. VLDB Endow.
+  17~(5) (2024) 1132--1145.
+
+\bibitem{talaei2024chess}
+S.~Talaei, M.~Pourreza, Y.-C. Chang, A.~Mirhoseini, A.~Saberi, {CHESS}:
+  contextual harnessing for efficient {SQL} synthesis, arXiv:2405.16755 (2024).
+
+\bibitem{wang2025macsql}
+B.~Wang, C.~Ren, J.~Yang, X.~Liang, J.~Bai, L.~Chai, et~al., {MAC-SQL}: a
+  multi-agent collaborative framework for text-to-{SQL}, in: Proc. COLING,
+  2025, pp. 540--557.
+
+\bibitem{valle2025}
+J.~Valle, O.~M. Bruno, Forecasting chaotic time series: comparative performance
+  of {LSTM}-based and {T}ransformer-based neural network, Chaos Solitons
+  Fractals 192 (2025) 116034.
+\newblock \href {https://doi.org/10.1016/j.chaos.2025.116034}
+  {\path{doi:10.1016/j.chaos.2025.116034}}.
+
+\bibitem{crespo2024}
+A.~Crespo-Otero, P.~Esteve, M.~Zanin, Deep learning models for the analysis of
+  time series: a practical introduction for the statistical physics
+  practitioner, Chaos Solitons Fractals 187 (2024) 115359.
+\newblock \href {https://doi.org/10.1016/j.chaos.2024.115359}
+  {\path{doi:10.1016/j.chaos.2024.115359}}.
+
+\bibitem{pathak2018}
+J.~Pathak, B.~Hunt, M.~Girvan, Z.~Lu, E.~Ott, Model-free prediction of large
+  spatiotemporally chaotic systems from data: a reservoir computing approach,
+  Phys. Rev. Lett. 120 (2018) 024102.
+\newblock \href {https://doi.org/10.1103/PhysRevLett.120.024102}
+  {\path{doi:10.1103/PhysRevLett.120.024102}}.
+
+\bibitem{pedraza2022}
+A.~Pedraza, O.~Deniz, G.~Bueno, Lyapunov stability for detecting adversarial
+  image examples, Chaos Solitons Fractals 155 (2022) 111745.
+\newblock \href {https://doi.org/10.1016/j.chaos.2021.111745}
+  {\path{doi:10.1016/j.chaos.2021.111745}}.
+
+\bibitem{steingrube2010}
+S.~Steingrube, M.~Timme, F.~W{\"o}rg{\"o}tter, P.~Manoonpong, Self-organized
+  adaptation of a simple neural circuit enables complex robot behaviour, Nat.
+  Phys. 6 (2010) 224--230.
+\newblock \href {https://doi.org/10.1038/nphys1508}
+  {\path{doi:10.1038/nphys1508}}.
+
+\bibitem{skarda1987}
+C.~A. Skarda, W.~J. Freeman, How brains make chaos in order to make sense of
+  the world, Behav. Brain Sci. 10~(2) (1987) 161--173.
+\newblock \href {https://doi.org/10.1017/S0140525X00047336}
+  {\path{doi:10.1017/S0140525X00047336}}.
+
+\bibitem{babloyantz1985}
+A.~Babloyantz, J.~M. Salazar, C.~Nicolis, Evidence of chaotic dynamics of brain
+  activity during the sleep cycle, Phys. Lett. A 111~(3) (1985) 152--156.
+\newblock \href {https://doi.org/10.1016/0375-9601(85)90444-X}
+  {\path{doi:10.1016/0375-9601(85)90444-X}}.
+
+\bibitem{korn2003}
+H.~Korn, P.~Faure, Is there chaos in the brain? {II}. {E}xperimental evidence
+  and related models, C. R. Biol. 326~(9) (2003) 787--840.
+\newblock \href {https://doi.org/10.1016/j.crvi.2003.09.011}
+  {\path{doi:10.1016/j.crvi.2003.09.011}}.
+
+\bibitem{stam2005}
+C.~J. Stam, Nonlinear dynamical analysis of {EEG} and {MEG}: review of an
+  emerging field, Clin. Neurophysiol. 116~(10) (2005) 2266--2301.
+\newblock \href {https://doi.org/10.1016/j.clinph.2005.06.011}
+  {\path{doi:10.1016/j.clinph.2005.06.011}}.
+
+\bibitem{tognoli2014}
+E.~Tognoli, J.~A.~S. Kelso, The metastable brain, Neuron 81~(1) (2014) 35--48.
+\newblock \href {https://doi.org/10.1016/j.neuron.2013.12.022}
+  {\path{doi:10.1016/j.neuron.2013.12.022}}.
+
+\bibitem{iasemidis2003}
+L.~D. Iasemidis, D.-S. Shiau, W.~Chaovalitwongse, J.~C. Sackellares, P.~M.
+  Pardalos, J.~C. Principe, et~al., Adaptive epileptic seizure prediction
+  system, IEEE Trans. Biomed. Eng. 50~(5) (2003) 616--627.
+\newblock \href {https://doi.org/10.1109/TBME.2003.810689}
+  {\path{doi:10.1109/TBME.2003.810689}}.
+
+\bibitem{mohler2011}
+G.~O. Mohler, M.~B. Short, P.~J. Brantingham, F.~P. Schoenberg, G.~E. Tita,
+  Self-exciting point process modeling of crime, J. Am. Stat. Assoc. 106~(493)
+  (2011) 100--108.
+\newblock \href {https://doi.org/10.1198/jasa.2011.ap09546}
+  {\path{doi:10.1198/jasa.2011.ap09546}}.
+
+\bibitem{short2008}
+M.~B. Short, M.~R. D'Orsogna, V.~B. Pasour, G.~E. Tita, P.~J. Brantingham,
+  A.~L. Bertozzi, et~al., A statistical model of criminal behavior, Math.
+  Models Methods Appl. Sci. 18~(Suppl.) (2008) 1249--1267.
+\newblock \href {https://doi.org/10.1142/S0218202508003029}
+  {\path{doi:10.1142/S0218202508003029}}.
+
+\bibitem{melgarejo2018}
+M.~Melgarejo, N.~Obregon, Information dynamics in urban crime, Entropy 20~(11)
+  (2018) 874.
+\newblock \href {https://doi.org/10.3390/e20110874}
+  {\path{doi:10.3390/e20110874}}.
+
+\bibitem{lum2016}
+K.~Lum, W.~Isaac, To predict and serve?, Significance 13~(5) (2016) 14--19.
+\newblock \href {https://doi.org/10.1111/j.1740-9713.2016.00960.x}
+  {\path{doi:10.1111/j.1740-9713.2016.00960.x}}.
+
+\bibitem{ensign2018}
+D.~Ensign, S.~A. Friedler, S.~Neville, C.~Scheidegger, S.~Venkatasubramanian,
+  Runaway feedback loops in predictive policing, in: Proc. Conference on
+  Fairness, Accountability and Transparency, PMLR 81, 2018, pp. 160--171.
+
+\bibitem{song2010}
+C.~Song, Z.~Qu, N.~Blumm, A.-L. Barab{\'a}si, Limits of predictability in human
+  mobility, Science 327~(5968) (2010) 1018--1021.
+\newblock \href {https://doi.org/10.1126/science.1177170}
+  {\path{doi:10.1126/science.1177170}}.
+
+\bibitem{dingwell2000}
+J.~B. Dingwell, J.~P. Cusumano, Nonlinear time series analysis of normal and
+  pathological human walking, Chaos 10~(4) (2000) 848--863.
+\newblock \href {https://doi.org/10.1063/1.1324008}
+  {\path{doi:10.1063/1.1324008}}.
+
+\bibitem{bruijn2013}
+S.~M. Bruijn, O.~G. Meijer, P.~J. Beek, J.~H. van Die{\"e}n, Assessing the
+  stability of human locomotion: a review of current measures, J. R. Soc.
+  Interface 10~(83) (2013) 20120999.
+\newblock \href {https://doi.org/10.1098/rsif.2012.0999}
+  {\path{doi:10.1098/rsif.2012.0999}}.
+
+\bibitem{wang2019har}
+J.~Wang, Y.~Chen, S.~Hao, X.~Peng, L.~Hu, Deep learning for sensor-based
+  activity recognition: a survey, Pattern Recognit. Lett. 119 (2019) 3--11.
+\newblock \href {https://doi.org/10.1016/j.patrec.2018.02.010}
+  {\path{doi:10.1016/j.patrec.2018.02.010}}.
+
+\bibitem{engelken2023}
+R.~Engelken, F.~Wolf, L.~F. Abbott, Lyapunov spectra of chaotic recurrent
+  neural networks, Phys. Rev. Res. 5 (2023) 043044.
+
+\end{thebibliography}

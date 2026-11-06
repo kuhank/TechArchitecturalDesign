@@ -1,0 +1,23 @@
+Dear Editor,
+
+I am pleased to submit the manuscript "Selective Chaos Control: Dimension-wise Lyapunov Analysis and Minimal Intervention for Stable yet Creative Large Language Model Agents" for consideration as a regular paper in Chaos, Solitons & Fractals.
+
+Large language model agents are iterated nonlinear maps that display sensitive dependence on their inputs, yet the tools used to manage them ignore the dynamical-systems view. This manuscript carries two classical ideas from nonlinear science, the measurement of finite-time Lyapunov rates with their predictability horizon and the Ott-Grebogi-Yorke principle of minimal control, into these agents at the level of semantic output dimensions.
+
+The main contributions are:
+1. A dimension-wise finite-step Lyapunov exponent and a "chaos map" for agent outputs, with a proven bracket linking observed divergence to the per-dimension error rate.
+2. A proof that factorised consensus has a strictly weaker stability condition than whole-output majority voting.
+3. A per-dimension temperature feedback law ("selective chaos"), with its exact stability region and the period-doubling bifurcation at the critical gain, confirmed numerically to within 0.03%.
+4. An "agent Lyapunov time" with a worst-case deviation bound and an optimal checkpoint allocation across agents.
+5. Numerical studies on the Rossler and Lorenz flows and on synthetic agents, with extensions to autonomous robots, neural signals and human-activity time series.
+
+The work fits the journal's interdisciplinary scope in nonlinear science and the theory of artificial intelligence and machine learning: the nonlinear-dynamics concepts are central to the method and its analysis, not decorative.
+
+This manuscript is original, has not been published previously, and is not under consideration elsewhere. There are no competing interests. Code to reproduce all results is available on request and will be made public upon publication.
+
+Thank you for your consideration.
+
+Sincerely,
+Kuhan K
+Indian Institute of Information Technology Kottayam, Kerala, India
+kuhankailash92@gmail.com
