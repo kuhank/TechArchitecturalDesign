@@ -38,7 +38,7 @@ SYSTEM AND METHOD FOR SELECTIVE CHAOS CONTROL OF AUTONOMOUS AGENTS USING DIMENSI
 \begin{tabular}{@{}ll}
 (a) Name: & KUHAN K\\
 (b) Nationality: & Indian\\
-(c) Address: & Chennai -- 600048, Tamil Nadu, India
+(c) Address: & No.~1, Bharathidasan Nagar, Karaikal -- 609605, Puducherry, India
 \end{tabular}
 
 \textbf{3. PREAMBLE TO THE DESCRIPTION}
@@ -190,7 +190,7 @@ where $d_j^\star$ is the midpoint of the dimension's band. Precision dimensions 
 
 \subsection*{G. Horizon manager and agent Lyapunov time (118)}
 
-\p For multi-step operation, the reciprocal $1/\lambda$ of the estimated growth rate is the \emph{agent Lyapunov time}, and $T_h=\lambda^{-1}\ln(\Delta/e_0)$ is the predictability horizon, where $e_0$ is the deviation immediately after a re-validation and $\Delta$ the tolerance. The horizon manager triggers re-validation (re-anchoring), such as verification of the current state, grounded regeneration, or a reset to the last validated state, every $\max(1,\lfloor\alpha T_h\rfloor)$ steps, with $0<\alpha<1$, preferably 0.5 to 0.8. This bounds the worst-case deviation by $e_0(\Delta/e_0)^{\alpha}<\Delta$ (FIG.~5). When several agents or tasks share a budget of re-validations, intervals proportional to $1/\lambda_i$ minimise the total number of re-validations for a common deviation target.
+\p For multi-step operation, the reciprocal $1/\lambda$ of the estimated growth rate is the \emph{agent Lyapunov time}, and $T_h=\lambda^{-1}\ln(\Delta/e_0)$ is the predictability horizon, where $e_0$ is the deviation immediately after a re-validation and $\Delta$ the tolerance. The horizon manager triggers re-validation (re-anchoring), such as verification of the current state, grounded regeneration, or a reset to the last validated state, every $\max(1,\lfloor\alpha T_h\rfloor)$ steps, with $0<\alpha<1$, preferably 0.5 to 0.8. This bounds the worst-case deviation by $e_0(\Delta/e_0)^{\alpha}<\Delta$ under a deterministic growth bound (FIG.~5). The growth rate is preferably obtained from earlier runs of tasks of the same type, stored per task type. Where it must be estimated during the task from the readings revealed at re-validations, the horizon manager uses a conservative estimate, namely the pooled rate over all readings weighted by interval length plus at least one standard error, because under-estimating a fast rate causes failures. Where the deviation can be monitored continuously, re-validation is instead triggered when the monitored deviation exceeds a fraction of the tolerance. When several agents or tasks share a budget of re-validations, intervals proportional to $1/\lambda_i$ minimise the total number of re-validations for a common deviation target.
 
 \subsection*{H. Master controller (116)}
 
@@ -216,14 +216,16 @@ which is reported together with the chaos map and the per-dimension error-rate r
 
 \subsection*{K. Example}
 
-\p In a simulated evaluation of a six-dimension structured-output agent over 4000 inputs, with $K=5$ and grounded regeneration triggered when $d_j>0.7$:
+\p In a simulated evaluation of a six-dimension structured-output agent over 4000 inputs, with $K=5$, ties broken at random, and grounded regeneration triggered when $d_j>0.7$:
 \begin{itemize}
-\item The system reached a full-output accuracy of 92.4\% with 5.6 model invocations per input.
-\item Whole-output majority voting reached 56.5\% with 5 invocations.
+\item The system reached a full-output accuracy of 92.1\% with 5.57 model invocations per input.
+\item Whole-output majority voting reached 54.3\% with 5 invocations.
 \item Verifying every dimension reached 85.7\% with 7 invocations.
-\item The dimension-wise exponent identified wrong dimensions with an area under the ROC curve of 0.947.
+\item The dimension-wise divergence identified wrong dimensions with an area under the ROC curve of 0.968.
 \end{itemize}
-In a simulation of 3000 multi-step agents with heterogeneous growth rates, horizon-based re-validation gave a 99.8\% success rate against 79.8\% for fixed-interval re-validation at the same mean number of re-validations. In the gain sweep of the variability controller, the onset of oscillation occurred at 0.9998 times the computed critical gain.
+The advantage over verifying every dimension is largest when grounded regeneration is imperfect.
+
+\p In a simulation of 3000 multi-step agents with heterogeneous growth rates, with the deviation revealed only at re-validations, horizon-based re-validation using known growth rates gave a 97.5\% success rate against 80.8\% for fixed-interval re-validation at the same mean number of re-validations. With rates estimated during the task, the conservative estimator improved on the fixed interval at moderate budgets. In the gain sweep of the variability controller, oscillation began within 0.2\% of the computed critical gain.
 
 \subsection*{L. Implementation}
 

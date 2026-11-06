@@ -143,11 +143,14 @@ def e2(rng):
     ax.set_xlim(0, 0.62)
     ax.legend(frameon=False)
     save(fig, "fig2_divergence_error_bracket")
-    inside = 0
-    for p, m, d in rows:
-        lo, hi = implied_error_rate_lower(min(d, 1)), implied_error_rate(min(d, 0.5))
-        inside += (lo - 0.03) <= p <= (hi + 0.03)
-    RESULTS["E2"] = {"points": int(len(rows)), "inside_bracket_tol0.03": int(inside)}
+    dom = rows[rows[:, 2] <= 0.5]
+    near = strict = 0
+    for p, m, d in dom:
+        lo, hi = implied_error_rate_lower(d), implied_error_rate(d)
+        near += (lo - 0.03) <= p <= (hi + 0.03)
+        strict += lo <= p <= hi
+    RESULTS["E2"] = {"points": int(len(rows)), "points_in_domain_d<=0.5": int(len(dom)),
+                     "in_domain_within_0.03": int(near), "in_domain_strictly_inside": int(strict)}
 
 
 # ----------------------------------------------------------------- E3
@@ -173,9 +176,15 @@ def sample_dims(rng, p, k, m=8, kappa=0.15, tau=0.7):
     return val
 
 
-def plurality(col):
+TIE_RNG = np.random.default_rng(11)
+
+
+def plurality(col, rng=None):
+    """Plurality value with ties broken uniformly at random."""
+    rng = rng or TIE_RNG
     vals, cnt = np.unique(col, return_counts=True)
-    return vals[np.argmax(cnt)], cnt.max() / len(col)
+    top = np.flatnonzero(cnt == cnt.max())
+    return vals[rng.choice(top)], cnt.max() / len(col)
 
 
 def run_strategies(rng, P, k=5, theta=0.7, g=0.25):
@@ -195,7 +204,8 @@ def run_strategies(rng, P, k=5, theta=0.7, g=0.25):
         # whole-output self-consistency: plurality over complete tuples
         tuples = [tuple(r) for r in S]
         uniq, cnt = np.unique(np.array(tuples), axis=0, return_counts=True)
-        best = uniq[np.argmax(cnt)] if cnt.max() > 1 else S[0]
+        top = np.flatnonzero(cnt == cnt.max())
+        best = uniq[rng.choice(top)]                       # ties broken at random
         acc["selfcons"] += np.all(best == 0)
         cost["selfcons"] += k
 
@@ -205,7 +215,7 @@ def run_strategies(rng, P, k=5, theta=0.7, g=0.25):
         cost["verifyall"] += 1 + D
 
         # factorised consensus (ablation: SCC without grounding)
-        fc = np.array([plurality(S[:, j])[0] for j in range(D)])
+        fc = np.array([plurality(S[:, j], rng)[0] for j in range(D)])
         acc["factor"] += np.all(fc == 0)
         cost["factor"] += k
 
@@ -216,7 +226,7 @@ def run_strategies(rng, P, k=5, theta=0.7, g=0.25):
             d = pairwise_divergence(list(S[:, j]))
             lam = math.log(max(d, 1e-3) / eps)
             dim_lam.append(lam)
-            v, share = plurality(S[:, j])
+            v, share = plurality(S[:, j], rng)
             dim_err.append(int(v != 0))
             if d <= theta:
                 out[j] = v
@@ -250,6 +260,11 @@ def e3(rng):
     for th in [0.0, 0.4, 0.6, 0.7, 0.8, 0.9, 1.01]:
         a, c, _, _ = run_strategies(np.random.default_rng(7), P[:2000], theta=th)
         sweep.append((th, a["scc"], c["scc"]))
+    # sensitivity to grounding strength g
+    gsweep = []
+    for g in [0.05, 0.10, 0.25, 0.50]:
+        a, c, _, _ = run_strategies(np.random.default_rng(7), P[:2000], g=g)
+        gsweep.append((g, a["verifyall"], c["verifyall"], a["scc"], c["scc"]))
     # self-consistency with growing K
     sc = []
     for k in [1, 3, 5, 9, 15]:
@@ -290,63 +305,92 @@ def e3(rng):
     RESULTS_LOCAL = {"levels": uniq, "p_wrong": [float(r) for r in rates], "n": [int(c) for c in counts]}
     save(fig, "fig3_agent_accuracy_cost")
     RESULTS["E3"] = {"wrong_rate_by_divergence": RESULTS_LOCAL, "accuracy": acc, "calls": cost, "auroc_dim_exponent": au,
-                     "scc_threshold_sweep": sweep,
+                     "scc_threshold_sweep": sweep, "grounding_strength_sweep_(g,va_acc,va_calls,scc_acc,scc_calls)": gsweep,
                      "selfcons_vs_k": sc}
 
 
 # ----------------------------------------------------------------- E4
 def run_agents(rng, lams, L=40, e0=0.01, delta=0.3, policy="fixed", interval=5, alpha=0.7,
-               noise=0.15):
-    from scc.sensor import ftle_from_series
+               noise=0.15, obs_noise=0.3, first=2, thr=0.3, z=1.0):
+    """Multi-step agents with deviation e_{t+1} = e_t exp(lambda + noise*xi).
+    The true deviation is NOT observable between checkpoints. A checkpoint
+    (verification) reveals a noisy reading e_obs = e_t exp(obs_noise*xi) and
+    re-anchors e to e0. Failure = e_t > delta at any step (unnoticed).
+    Policies:
+      fixed    - checkpoint every `interval` steps
+      known    - interval floor(alpha*T_h) with the true lambda (tests Prop. 5)
+      ema      - lambda estimated online from checkpoint readings, exponential average
+      ucb      - lambda estimated online, pooled over checkpoints, plus z standard errors
+      oracle   - observes e_t at every step and re-anchors when e_t > thr*delta
+                 (unattainable reference)"""
+    lnr = math.log(delta / e0)
     succ, ckpts = 0, 0
     for lam in lams:
-        e, hist, since, ok = e0, [e0], 0, True
-        lam_hat = 0.3
+        e, since, ok = e0, 0, True
+        nxt = max(1, int(alpha * lnr / lam)) if policy == "known" else first
+        lam_hat, reads = None, []
         for t in range(L):
             e = e * math.exp(lam + noise * rng.standard_normal())
-            hist.append(e)
             since += 1
             if e > delta:
                 ok = False
                 break
             if policy == "fixed":
                 trig = since >= interval
-            elif policy == "every":
-                trig = True
             elif policy == "none":
                 trig = False
-            else:  # adaptive Lyapunov-time
-                if len(hist) >= 3:
-                    lam_hat = max(ftle_from_series(hist[-8:]), 1e-3)
-                th = math.log(delta / e0) / lam_hat
-                trig = since >= max(1, int(alpha * th))
+            elif policy == "oracle":
+                trig = e > thr * delta
+            else:
+                trig = since >= nxt
             if trig:
                 ckpts += 1
-                e, hist, since = e0, [e0], 0
+                if policy in ("ema", "ucb"):
+                    e_obs = e * math.exp(obs_noise * rng.standard_normal())
+                    lam_obs = math.log(max(e_obs, 1e-12) / e0) / since
+                    if policy == "ema":
+                        lam_hat = lam_obs if lam_hat is None else 0.5 * lam_hat + 0.5 * lam_obs
+                        est = lam_hat
+                    else:
+                        reads.append((lam_obs, since))
+                        w = np.array([n for _, n in reads], float)
+                        v = np.array([l for l, _ in reads])
+                        lam_hat = float((w * v).sum() / w.sum())
+                        se = math.sqrt(noise ** 2 / w.sum() + obs_noise ** 2 * len(w) / w.sum() ** 2)
+                        est = lam_hat + z * se
+                    nxt = max(1, int(alpha * lnr / max(est, 1e-3)))
+                e, since = e0, 0
         succ += ok
     return succ / len(lams), ckpts / len(lams)
 
 
 def e4(rng):
     lams = rng.uniform(0.03, 0.7, 3000)
-    fixed = [(N, *run_agents(np.random.default_rng(3), lams, policy="fixed", interval=N))
-             for N in [1, 2, 3, 4, 5, 6, 8, 10, 15, 20, 40]]
-    adapt = [(a, *run_agents(np.random.default_rng(3), lams, policy="adaptive", alpha=a))
-             for a in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]]
-    none = run_agents(np.random.default_rng(3), lams, policy="none")
+    R = lambda **kw: run_agents(np.random.default_rng(3), lams, **kw)  # noqa: E731
+    fixed = [(N, *R(policy="fixed", interval=N)) for N in [1, 2, 3, 4, 5, 6, 8, 10, 15, 20, 40]]
+    alphas = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    known = [(a, *R(policy="known", alpha=a)) for a in alphas]
+    ucb = [(a, *R(policy="ucb", alpha=a)) for a in alphas]
+    ema = [(a, *R(policy="ema", alpha=a)) for a in alphas]
+    oracle = [(th, *R(policy="oracle", thr=th)) for th in [0.1, 0.2, 0.3, 0.5, 0.7]]
+    none = R(policy="none")
 
-    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.6))
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.7))
     ax = axes[0]
-    f, a = np.array(fixed), np.array(adapt)
-    ax.plot(f[:, 2], f[:, 1], "o-", ms=3, color=C["fixed"], label="fixed interval")
-    ax.plot(a[:, 2], a[:, 1], "s-", ms=3, color=C["adaptive"], label="Lyapunov-time (adaptive)")
-    ax.axhline(none[0], color="0.5", ls=":", lw=0.8, label="no checkpoints")
+    for data, mk, col, lab in [(fixed, "o-", C["fixed"], "fixed interval"),
+                               (known, "s-", C["adaptive"], r"horizon, true $\lambda$"),
+                               (ucb, "d--", "#ff7f0e", r"horizon, online $\hat\lambda$ (UCB)"),
+                               (ema, "x:", "#8c564b", r"horizon, online $\hat\lambda$ (EMA)"),
+                               (oracle, "^:", "0.4", r"oracle threshold (sees $e_t$)")]:
+        d = np.array(data)
+        ax.plot(d[:, 2], d[:, 1], mk, ms=3, lw=0.9, color=col, label=lab)
+    ax.axhline(none[0], color="0.6", ls=":", lw=0.7)
+    ax.set_xlim(0, 16)
     ax.set_xlabel("checkpoints per task")
     ax.set_ylabel("task success rate")
-    ax.set_title("(a) Multi-step agents (L = 40 steps)")
-    ax.legend(frameon=False, loc="lower right")
+    ax.set_title("(a) Multi-step agents (L = 40)")
+    ax.legend(frameon=False, loc="lower right", fontsize=6.5)
 
-    # theory: worst-case error under re-anchoring every alpha*T_h
     ax = axes[1]
     e0, delta = 0.01, 0.3
     al = np.linspace(0.05, 1.0, 100)
@@ -354,15 +398,18 @@ def e4(rng):
     ax.axhline(delta, color=C["scc"], ls="--", lw=0.8, label=r"tolerance $\Delta$")
     ax.set_xlabel(r"checkpoint fraction $\alpha$ of horizon $T_h$")
     ax.set_ylabel(r"worst-case deviation $e_{\max}$")
-    ax.set_title(r"(b) Bound $e_{\max}=e_0(\Delta/e_0)^{\alpha}$")
+    ax.set_title(r"(b) Bound $e_{\max}=e_0(\Delta/e_0)^{\alpha}$ (noise-free)")
     ax.legend(frameon=False)
     save(fig, "fig4_lyapunov_time_checkpointing")
 
-    # matched-cost comparison: interpolate fixed curve at adaptive costs
-    fx = f[np.argsort(f[:, 2])]
-    matched = [(float(c), float(s), float(np.interp(c, fx[:, 2], fx[:, 1]))) for _, s, c in a]
-    RESULTS["E4"] = {"fixed": fixed, "adaptive": adapt, "none": none,
-                     "matched_cost_(cost,adaptive,fixed)": matched}
+    fx = np.array(sorted(fixed, key=lambda r: r[2]))
+    def vs_fixed(rows):
+        return [(float(a), float(c), float(s), float(np.interp(c, fx[:, 2], fx[:, 1]))) for a, s, c in rows]
+    RESULTS["E4"] = {"fixed_(N,succ,ckpts)": fixed, "none": none, "oracle_(thr,succ,ckpts)": oracle,
+                     "known_vs_fixed_(alpha,ckpts,succ,fixed_interp)": vs_fixed(known),
+                     "ucb_vs_fixed_(alpha,ckpts,succ,fixed_interp)": vs_fixed(ucb),
+                     "ema_vs_fixed_(alpha,ckpts,succ,fixed_interp)": vs_fixed(ema),
+                     "lambda_mean_over_max": float(lams.mean() / lams.max())}
 
 
 # ----------------------------------------------------------------- E5

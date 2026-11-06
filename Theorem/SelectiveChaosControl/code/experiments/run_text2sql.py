@@ -10,8 +10,8 @@ Databases are SQLite files at <db-root>/<db_id>/<db_id>.sqlite (Spider/BIRD layo
 Strategies compared:
     single     one greedy generation
     selfcons   K samples, majority vote on execution result (whole output)
-    verifyall  ground + re-generate every dimension (upper-cost reference)
-    scc        Selective Chaos Control (proposed)
+    scc        Selective Chaos Control (proposed; reference implementation)
+Planned additions: verify-all baseline, per-dimension temperatures, measured eps.
 Metrics: execution accuracy, LLM calls per question, intervention rate per dimension.
 """
 from __future__ import annotations

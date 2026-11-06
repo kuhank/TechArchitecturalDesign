@@ -1,7 +1,6 @@
 """LLM adapter and perturbation operators (run on your own machine).
 
-Works with any OpenAI-compatible chat endpoint (hosted or local, e.g.
-vLLM / Ollama / LM Studio). Configure with environment variables:
+Works with any chat-completions-compatible endpoint (hosted or local). Configure with environment variables:
 
     SCC_BASE_URL   e.g. http://localhost:11434/v1
     SCC_API_KEY    key for the endpoint ("none" for local servers)

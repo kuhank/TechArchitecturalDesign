@@ -18,7 +18,7 @@ Portal: https://ipronline.ipindia.gov.in/epatentfiling → **New Application (Fo
 | Gender | Male |
 | Nationality | Indian |
 | Country of residence | India |
-| Address | *full postal address*, Chennai – 600048, Tamil Nadu, India |
+| Address | No. 1, Bharathidasan Nagar, Karaikal – 609605, Puducherry, India |
 | Email / Mobile | kuhankailash92@gmail.com / 9443276849 |
 
 ## Inventor (Section 4)

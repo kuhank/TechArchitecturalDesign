@@ -1,7 +1,7 @@
 Highlights
 
-- Per-dimension Lyapunov exponents localise instability in LLM agent outputs
+- Per-dimension Lyapunov-style exponents localise errors in synthetic agents
 - Sampled-output divergence provably brackets the per-dimension error rate
 - OGY-style minimal control intervenes only on unstable output dimensions
 - Per-dimension temperature keeps creative chaos and suppresses harmful chaos
-- Lyapunov-time checkpointing makes multi-step agents reliable at equal cost
+- Horizon checkpointing helps when growth rates are known; online is harder
