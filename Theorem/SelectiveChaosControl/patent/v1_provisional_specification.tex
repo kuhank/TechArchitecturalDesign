@@ -232,6 +232,7 @@ The advantage over verifying every dimension is largest when grounded regenerati
 \p The system may be implemented on a general-purpose computer, a server, an embedded controller of a robot or vehicle, or distributed across a client and a remote model service, with the modules described above stored as instructions in non-transitory memory and executed by one or more processors. The generator may be local or accessed through a network interface. For the robot embodiment, the system is connected between the planner and the actuator interface.
 
 %% ==================================================================
+\newpage
 \section*{CLAIMS (indicative, for the complete specification)}
 
 \textbf{I claim:}
@@ -253,6 +254,13 @@ Dated this \rule{1cm}{0.4pt} day of November, 2026.
 \hfill Signature: \rule{4cm}{0.4pt}\\
 \hfill KUHAN K\\
 \hfill Applicant
+
+%% ==================================================================
+\newpage
+\section*{ABSTRACT}
+\textbf{SYSTEM AND METHOD FOR SELECTIVE CHAOS CONTROL OF AUTONOMOUS AGENTS USING DIMENSION-WISE DIVERGENCE MEASUREMENT AND MINIMAL INTERVENTION}
+
+A system and method for controlling an autonomous agent, such as a generative-model agent, a database-query generator or a robot planner, generates several meaning-preserving perturbations of an input and obtains a candidate output for each. A decomposition module splits each output into dimensions with a precision or exploratory role. A chaos sensor computes, per dimension, the divergence between candidates and a finite-step Lyapunov-style exponent, and estimates an error-rate range without labels. Each precision dimension whose divergence leaves a target band receives only the lowest-cost corrective intervention, from consensus, grounded regeneration of that dimension alone, external verification and escalation, while consensus is accepted for stable dimensions. Exploratory dimensions keep controlled variability through a per-dimension feedback law whose gain is held below a computed critical value. A master controller composes the final output or admissible robot action, and a horizon manager schedules re-validation of multi-step agents at a fraction of the predictability horizon. The invention reduces model invocations, localises errors and prevents unsafe actions while preserving exploration. (FIG.~1)
 
 %% ==================================================================
 \newpage

@@ -1,0 +1,19 @@
+CLAIMS (indicative, for the complete specification)
+
+I claim:
+
+1.  A system for selective chaos control of an autonomous agent, comprising at least one processor and a memory storing instructions which, when executed, cause the processor to: generate a plurality of meaning-preserving perturbations of an input; obtain a candidate output of the agent for each perturbation; decompose each candidate output into a plurality of output dimensions, each having a distance measure and a role selected from a precision role and an exploratory role; compute for each dimension a divergence and a finite-step exponent relative to a perturbation magnitude; apply to each precision dimension whose divergence lies outside a target band the lowest-cost intervention from an ordered intervention set whose predicted error meets a tolerance, while accepting a consensus value for precision dimensions within the band; maintain the divergence of each exploratory dimension within a band by adjusting a dimension-specific variability parameter; and compose a final output from the selected dimension values.
+
+2.  The system of claim 1, wherein the ordered intervention set comprises consensus, grounded regeneration of only the affected dimension, external verification, and escalation or safe stop.
+
+3.  The system of claim 1, wherein the processor computes for each dimension an estimated error-rate range from its divergence as [1 − √(1 − d), ½ (1 − √(1 − 2d))].
+
+4.  The system of claim 1, wherein the variability parameter is updated by a log-proportional feedback law whose gain is kept below a critical gain 2/(τ^(⋆)g′(τ^(⋆))) computed from recent parameter–divergence pairs.
+
+5.  The system of claim 1, further comprising a horizon manager that estimates an error-growth rate of a multi-step agent from a series of deviations and triggers re-validation at a fraction α < 1 of the predictability horizon λ⁻¹ln (Δ/e₀).
+
+6.  The system of claim 1, further comprising a master controller that checks constraints between dimensions, re-processes violating dimensions, and outputs a stability index computed from the weighted divergences.
+
+7.  An autonomous robot comprising sensors, actuators, a planner and the system of claim 1, wherein safety-related dimensions are assigned the precision role and route-, strategy- or approach-related dimensions are assigned the exploratory role, and wherein only an action composed from admissible dimension values is passed to the actuators.
+
+8.  A computer-implemented method for selective chaos control of an autonomous agent, comprising the steps performed by the processor in any of claims 1 to 6.
