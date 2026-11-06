@@ -1,11 +1,11 @@
 # Submission guide: Chaos, Solitons & Fractals
 
 **Paper:** Selective Chaos Control: Dimension-wise Lyapunov Analysis and Minimal Intervention for Stable yet Creative Large Language Model Agents
-**Author:** Kuhan K (sole author), IIIT Kottayam, Kerala, India. Corresponding email: kuhankailash92@gmail.com
+**Author:** Kuhan K (sole author), Independent Researcher, Chennai, India. Corresponding email: kuhankailash92@gmail.com
 
 ## Recommended order (protects IPR)
 
-1. **File a provisional patent first** (before any public post). Check IIIT Kottayam's IP policy with your guide first.
+1. **File a provisional patent first** (individual applicant), before any public post.
 2. **Run the real experiment** (`code/README.md`, section 2) and add the results to Section 7. A paper with simulation-only results is at high risk of desk rejection.
 3. **Submit to the journal** (submission is confidential; it is not a public disclosure).
 4. **Post on LinkedIn** only after the patent is filed. Share the concept, not the full paper.

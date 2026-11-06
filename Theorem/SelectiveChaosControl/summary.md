@@ -5,7 +5,7 @@
 - Fixes only the unstable dimensions and keeps creative dimensions free.
 - Re-checks multi-step agents at their "agent Lyapunov time".
 
-Target journal: *Chaos, Solitons & Fractals* (Elsevier). Sole author: **Kuhan K**, IIIT Kottayam, Kerala, India.
+Target journal: *Chaos, Solitons & Fractals* (Elsevier). Sole author: **Kuhan K**, Independent Researcher, Chennai, India.
 
 ## Status (06 Nov 2026)
 - v1 manuscript complete (PDF and LaTeX): theory with 5 propositions, simulation study E1–E6, applications, and an evaluation protocol.
@@ -19,11 +19,11 @@ Target journal: *Chaos, Solitons & Fractals* (Elsevier). Sole author: **Kuhan K*
 - The temperature controller bifurcates at the predicted critical gain (0.9998·η_c).
 
 ## Key decisions
-- Framework + prototype paper; sole author; affiliation IIIT Kottayam; email kuhankailash92@gmail.com.
+- Framework + prototype paper; sole author; affiliation Independent Researcher, Chennai; email kuhankailash92@gmail.com.
 - Crime application limited to aggregate patterns, with an ethics note.
 
 ## Open / next steps
-1. Provisional patent (check the IIIT Kottayam IP policy) **before** any public post.
+1. Provisional patent (individual filing) **before** any public post.
 2. Run `code/experiments/run_text2sql.py` on Spider/BIRD and add the real results.
 3. Fill in the generative AI declaration (red text at the end of the manuscript).
 4. Submit via Editorial Manager (see `v1_submission_guide.md`). LinkedIn post only after the patent is filed.
